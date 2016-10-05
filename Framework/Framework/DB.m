@@ -13,6 +13,7 @@
 @interface DB ()
 
 @property NSString *name;
+@property NSBundle *bundle;
 @property NSPersistentStore *store;
 @property NSPersistentStoreCoordinator *psc;
 @property NSManagedObjectModel *mom;
@@ -24,15 +25,20 @@
 
 @implementation DB
 
-- (instancetype)initWithName:(NSString *)name {
+- (instancetype)initWithName:(NSString *)name fromBundle:(NSBundle *)bundle {
     
     self = [super init];
     
     if (self) {
         
+        bundle = bundle ? bundle : [NSBundle mainBundle];
+        
+        self.name = name;
+        self.bundle = bundle;
+        
         // Managed object model
         
-        NSURL *momURL = [[NSBundle mainBundle] URLForResource:name withExtension:@"momd"];
+        NSURL *momURL = [bundle URLForResource:name withExtension:@"momd"];
         NSManagedObjectModel *mom = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
         self.mom = mom;
         

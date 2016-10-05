@@ -16,7 +16,7 @@
     static DB *db = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        db = [[self alloc] initWithName:@"MyDB"];
+        db = [[self alloc] initWithName:@"MyDB" fromBundle:nil];
     });
     return db;
 }
