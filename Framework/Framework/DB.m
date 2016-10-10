@@ -66,7 +66,7 @@
         
         NSError *error = nil;
         NSPersistentStore *store = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
-        NSAssert(store != nil, error.localizedDescription);
+        NSAssert(store, error.localizedDescription);
         self.store = store;
     }
     
