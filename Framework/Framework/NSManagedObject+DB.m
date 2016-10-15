@@ -22,6 +22,7 @@
     NSFetchRequest *fr = [self fetchRequest];
     fr.predicate = predicate;
     fr.fetchLimit = 1;
+    fr.includesSubentities = NO;
     NSManagedObject *mo = [moc executeFetchRequest:fr error:nil].firstObject;
     return mo;
 }
@@ -38,6 +39,7 @@
     NSFetchRequest *fr = [self fetchRequest];
     fr.predicate = predicate;
     fr.fetchBatchSize = 100;
+    fr.includesSubentities = NO;
     NSArray *mos = [moc executeFetchRequest:fr error:nil];
     return mos;
 }
@@ -60,7 +62,10 @@
 
 #pragma clang diagnostic pop
 
-- (void)importFromDictionary:(NSDictionary *)dictionary {
+- (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map {
+    
+    dictionary = [self dictionary:dictionary usingMap:map];
+    
     NSArray *keys = dictionary.allKeys;
     NSArray *attributes = self.entity.attributesByName.allKeys;
     for (NSString *key in keys) {
@@ -71,14 +76,32 @@
     }
 }
 
-- (NSDictionary *)exportToDictionary {
+- (NSDictionary *)exportToDictionaryUsingMap:(NSDictionary *)map {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     NSArray *keys = self.entity.attributesByName.allKeys;
     for (NSString *key in keys) {
         id value = [self valueForKey:key];
         dictionary[key] = value;
     }
+    
+    dictionary = [self dictionary:dictionary usingMap:map].mutableCopy;
+    
     return dictionary;
+}
+
+#pragma mark - Helpers
+
+- (NSDictionary *)dictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map {
+    NSMutableDictionary *mappedDictionary = dictionary.mutableCopy;
+    for (NSString *mapKey in map.allKeys) {
+        id value = mappedDictionary[mapKey];
+        if (value) {
+            NSString *mapValue = map[mapKey];
+            mappedDictionary[mapValue] = value;
+            mappedDictionary[mapKey] = nil;
+        }
+    }
+    return mappedDictionary;
 }
 
 @end

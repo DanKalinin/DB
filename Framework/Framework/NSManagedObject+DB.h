@@ -22,7 +22,7 @@
 
 + (NSFetchRequest *)fetchRequest;
 
-- (void)importFromDictionary:(NSDictionary *)dictionary;
-- (NSDictionary *)exportToDictionary;
+- (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map;
+- (NSDictionary *)exportToDictionaryUsingMap:(NSDictionary *)map;
 
 @end
