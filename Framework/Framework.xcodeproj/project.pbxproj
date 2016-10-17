@@ -11,6 +11,8 @@
 		374391A91D91482C005E1075 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 374391A71D91482C005E1075 /* DB.m */; };
 		374391F21D91C815005E1075 /* NSManagedObject+DB.h in Headers */ = {isa = PBXBuildFile; fileRef = 374391EE1D91C815005E1075 /* NSManagedObject+DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		374391F31D91C815005E1075 /* NSManagedObject+DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 374391EF1D91C815005E1075 /* NSManagedObject+DB.m */; };
+		3784E7621DB54EE300D4E508 /* FRCTVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 3784E7601DB54EE300D4E508 /* FRCTVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3784E7631DB54EE300D4E508 /* FRCTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3784E7611DB54EE300D4E508 /* FRCTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		374391A71D91482C005E1075 /* DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB.m; sourceTree = "<group>"; };
 		374391EE1D91C815005E1075 /* NSManagedObject+DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+DB.h"; sourceTree = "<group>"; };
 		374391EF1D91C815005E1075 /* NSManagedObject+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+DB.m"; sourceTree = "<group>"; };
+		3784E7601DB54EE300D4E508 /* FRCTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRCTVC.h; sourceTree = "<group>"; };
+		3784E7611DB54EE300D4E508 /* FRCTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRCTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 				374391A71D91482C005E1075 /* DB.m */,
 				374391EE1D91C815005E1075 /* NSManagedObject+DB.h */,
 				374391EF1D91C815005E1075 /* NSManagedObject+DB.m */,
+				3784E7601DB54EE300D4E508 /* FRCTVC.h */,
+				3784E7611DB54EE300D4E508 /* FRCTVC.m */,
 				3743919F1D914819005E1075 /* Info.plist */,
 			);
 			path = Framework;
@@ -70,6 +76,7 @@
 			files = (
 				374391F21D91C815005E1075 /* NSManagedObject+DB.h in Headers */,
 				374391A81D91482C005E1075 /* DB.h in Headers */,
+				3784E7621DB54EE300D4E508 /* FRCTVC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3784E7631DB54EE300D4E508 /* FRCTVC.m in Sources */,
 				374391A91D91482C005E1075 /* DB.m in Sources */,
 				374391F31D91C815005E1075 /* NSManagedObject+DB.m in Sources */,
 			);

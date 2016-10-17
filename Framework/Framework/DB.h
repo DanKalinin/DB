@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import <DB/NSManagedObject+DB.h>
+#import <DB/FRCTVC.h>
 
 FOUNDATION_EXPORT double DBVersionNumber;
 FOUNDATION_EXPORT const unsigned char DBVersionString[];
