@@ -13,7 +13,6 @@
 @interface DB ()
 
 @property NSString *name;
-@property NSBundle *bundle;
 @property NSPersistentStore *store;
 @property NSPersistentStoreCoordinator *psc;
 @property NSManagedObjectModel *mom;
@@ -34,7 +33,6 @@
         bundle = bundle ? bundle : [NSBundle mainBundle];
         
         self.name = name;
-        self.bundle = bundle;
         
         // Managed object model
         
