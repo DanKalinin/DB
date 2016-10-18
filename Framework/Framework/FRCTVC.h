@@ -16,8 +16,8 @@
 @property NSFetchedResultsController *frc;
 @property UITableViewRowAnimation insertionAnimation;
 @property UITableViewRowAnimation deletionAnimation;
-@property NSString *cellIdentifier;
 
+- (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end

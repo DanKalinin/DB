@@ -22,7 +22,6 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.insertionAnimation = self.deletionAnimation = UITableViewRowAnimationFade;
-        self.cellIdentifier = @"Cell";
     }
     return self;
 }
@@ -41,7 +40,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellIdentifier forIndexPath:indexPath];
+    NSString *cellIdentifier = [self cellIdentifierForIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -85,6 +85,10 @@
 }
 
 #pragma mark - Helpers
+
+- (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath {
+    return @"Cell";
+}
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 }
