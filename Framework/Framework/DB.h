@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <DB/NSManagedObjectModel+DB.h>
 #import <DB/NSManagedObject+DB.h>
 #import <DB/FRCTVC.h>
 

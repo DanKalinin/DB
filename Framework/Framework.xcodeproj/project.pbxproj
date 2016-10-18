@@ -13,7 +13,20 @@
 		374391F31D91C815005E1075 /* NSManagedObject+DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 374391EF1D91C815005E1075 /* NSManagedObject+DB.m */; };
 		3784E7621DB54EE300D4E508 /* FRCTVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 3784E7601DB54EE300D4E508 /* FRCTVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3784E7631DB54EE300D4E508 /* FRCTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3784E7611DB54EE300D4E508 /* FRCTVC.m */; };
+		3784E7941DB61E0600D4E508 /* Helpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3784E7931DB61DFA00D4E508 /* Helpers.framework */; };
+		3784E7971DB61E5400D4E508 /* NSManagedObjectModel+DB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3784E7951DB61E5400D4E508 /* NSManagedObjectModel+DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3784E7981DB61E5400D4E508 /* NSManagedObjectModel+DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3784E7921DB61DFA00D4E508 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3743921C1D91EED7005E1075;
+			remoteInfo = Helpers;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3743919B1D914819005E1075 /* DB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +37,9 @@
 		374391EF1D91C815005E1075 /* NSManagedObject+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+DB.m"; sourceTree = "<group>"; };
 		3784E7601DB54EE300D4E508 /* FRCTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRCTVC.h; sourceTree = "<group>"; };
 		3784E7611DB54EE300D4E508 /* FRCTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRCTVC.m; sourceTree = "<group>"; };
+		3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Framework.xcodeproj; path = ../../../../Helpers/Framework/Framework.xcodeproj; sourceTree = "<group>"; };
+		3784E7951DB61E5400D4E508 /* NSManagedObjectModel+DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+DB.h"; sourceTree = "<group>"; };
+		3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+DB.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3784E7941DB61E0600D4E508 /* Helpers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +57,7 @@
 		374391911D914819005E1075 = {
 			isa = PBXGroup;
 			children = (
+				3784E78C1DB61DE500D4E508 /* Frameworks */,
 				3743919D1D914819005E1075 /* Framework */,
 				3743919C1D914819005E1075 /* Products */,
 			);
@@ -58,6 +76,8 @@
 			children = (
 				374391A61D91482C005E1075 /* DB.h */,
 				374391A71D91482C005E1075 /* DB.m */,
+				3784E7951DB61E5400D4E508 /* NSManagedObjectModel+DB.h */,
+				3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */,
 				374391EE1D91C815005E1075 /* NSManagedObject+DB.h */,
 				374391EF1D91C815005E1075 /* NSManagedObject+DB.m */,
 				3784E7601DB54EE300D4E508 /* FRCTVC.h */,
@@ -65,6 +85,30 @@
 				3743919F1D914819005E1075 /* Info.plist */,
 			);
 			path = Framework;
+			sourceTree = "<group>";
+		};
+		3784E78C1DB61DE500D4E508 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3784E78D1DB61DE500D4E508 /* Helpers */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		3784E78D1DB61DE500D4E508 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3784E78F1DB61DFA00D4E508 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3784E7931DB61DFA00D4E508 /* Helpers.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -76,6 +120,7 @@
 			files = (
 				374391F21D91C815005E1075 /* NSManagedObject+DB.h in Headers */,
 				374391A81D91482C005E1075 /* DB.h in Headers */,
+				3784E7971DB61E5400D4E508 /* NSManagedObjectModel+DB.h in Headers */,
 				3784E7621DB54EE300D4E508 /* FRCTVC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,12 +171,28 @@
 			mainGroup = 374391911D914819005E1075;
 			productRefGroup = 3743919C1D914819005E1075 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3784E78F1DB61DFA00D4E508 /* Products */;
+					ProjectRef = 3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3743919A1D914819005E1075 /* DB */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3784E7931DB61DFA00D4E508 /* Helpers.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Helpers.framework;
+			remoteRef = 3784E7921DB61DFA00D4E508 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		374391991D914819005E1075 /* Resources */ = {
@@ -151,6 +212,7 @@
 				3784E7631DB54EE300D4E508 /* FRCTVC.m in Sources */,
 				374391A91D91482C005E1075 /* DB.m in Sources */,
 				374391F31D91C815005E1075 /* NSManagedObject+DB.m in Sources */,
+				3784E7981DB61E5400D4E508 /* NSManagedObjectModel+DB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
