@@ -66,8 +66,17 @@
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    NSArray *indexPathsToInsert = @[newIndexPath];
-    NSArray *indexPathsToDelete = @[indexPath];
+    
+    NSMutableArray *indexPathsToInsert = [NSMutableArray array];
+    if (newIndexPath) {
+        [indexPathsToInsert addObject:newIndexPath];
+    }
+    
+    NSMutableArray *indexPathsToDelete = [NSMutableArray array];
+    if (indexPath) {
+        [indexPathsToDelete addObject:indexPath];
+    }
+    
     if (type == NSFetchedResultsChangeInsert) {
         [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationFade];
     } else if (type == NSFetchedResultsChangeDelete) {
