@@ -85,7 +85,8 @@
         [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationFade];
     } else if (type == NSFetchedResultsChangeUpdate) {
-        
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self configureCell:cell atIndexPath:indexPath];
     }
 }
 
