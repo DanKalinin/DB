@@ -25,4 +25,7 @@
 - (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map;
 - (NSDictionary *)exportToDictionaryUsingMap:(NSDictionary *)map;
 
+- (void)setPrimitiveValue:(id)value forKey:(NSString *)key notify:(BOOL)notify;
+- (id)primitiveValueForKey:(NSString *)key notify:(BOOL)notify;
+
 @end

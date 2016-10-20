@@ -89,6 +89,32 @@
     return dictionary;
 }
 
+- (void)setPrimitiveValue:(id)value forKey:(NSString *)key notify:(BOOL)notify {
+    if (notify) {
+        [self willChangeValueForKey:key];
+    }
+    
+    [self setPrimitiveValue:value forKey:key];
+    
+    if (notify) {
+        [self didChangeValueForKey:key];
+    }
+}
+
+- (id)primitiveValueForKey:(NSString *)key notify:(BOOL)notify {
+    if (notify) {
+        [self willAccessValueForKey:key];
+    }
+    
+    id value = [self primitiveValueForKey:key];
+    
+    if (notify) {
+        [self didAccessValueForKey:key];
+    }
+    
+    return value;
+}
+
 #pragma mark - Helpers
 
 - (NSDictionary *)dictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map {

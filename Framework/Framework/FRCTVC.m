@@ -55,24 +55,20 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     NSIndexSet *sections = [NSIndexSet indexSetWithIndex:sectionIndex];
     if (type == NSFetchedResultsChangeInsert) {
-        [self.tableView insertSections:sections withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertSections:sections withRowAnimation:self.insertionAnimation];
     } else if (type == NSFetchedResultsChangeDelete) {
-        [self.tableView deleteSections:sections withRowAnimation:UITableViewRowAnimationFade];
-    } else if (type == NSFetchedResultsChangeMove) {
-        
-    } else if (type == NSFetchedResultsChangeUpdate) {
-        
+        [self.tableView deleteSections:sections withRowAnimation:self.deletionAnimation];
     }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     if (type == NSFetchedResultsChangeInsert) {
-        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
     } else if (type == NSFetchedResultsChangeDelete) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
     } else if (type == NSFetchedResultsChangeMove) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
     } else if (type == NSFetchedResultsChangeUpdate) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         [self configureCell:cell atIndexPath:indexPath];
