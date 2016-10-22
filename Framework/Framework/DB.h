@@ -19,10 +19,9 @@ FOUNDATION_EXPORT const unsigned char DBVersionString[];
 
 @interface DB : NSObject
 
-- (instancetype)initWithName:(NSString *)name fromBundle:(NSBundle *)bundle;
+- (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle;
 
 @property (readonly) NSString *name;
-@property (readonly) NSBundle *bundle;
 
 @property (readonly) NSPersistentStore *store;
 @property (readonly) NSPersistentStoreCoordinator *psc;

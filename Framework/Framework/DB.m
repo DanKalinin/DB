@@ -24,10 +24,8 @@
 
 @implementation DB
 
-- (instancetype)initWithName:(NSString *)name fromBundle:(NSBundle *)bundle {
-    
+- (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle {
     self = [super init];
-    
     if (self) {
         
         bundle = bundle ? bundle : [NSBundle mainBundle];
@@ -67,7 +65,6 @@
         NSAssert(store, error.localizedDescription);
         self.store = store;
     }
-    
     return self;
 }
 
