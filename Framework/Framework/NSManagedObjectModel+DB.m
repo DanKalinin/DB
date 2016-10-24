@@ -14,13 +14,13 @@
 @implementation NSManagedObjectModel (DB)
 
 + (void)load {
-    SEL swizzling = @selector(fetchRequestFromTemplateWithName:substitutionVariables:);
+    SEL original = @selector(fetchRequestFromTemplateWithName:substitutionVariables:);
     SEL swizzled = @selector(swizzledFetchRequestFromTemplateWithName:substitutionVariables:);
-    [self swizzleInstanceMethod:swizzling with:swizzled];
+    [self swizzleInstanceMethod:original with:swizzled];
     
-    swizzling = @selector(fetchRequestTemplateForName:);
+    original = @selector(fetchRequestTemplateForName:);
     swizzled = @selector(swizzledFetchRequestTemplateForName:);
-    [self swizzleInstanceMethod:swizzling with:swizzled];
+    [self swizzleInstanceMethod:original with:swizzled];
 }
 
 - (NSFetchRequest *)swizzledFetchRequestFromTemplateWithName:(NSString *)name substitutionVariables:(NSDictionary<NSString *,id> *)variables {
