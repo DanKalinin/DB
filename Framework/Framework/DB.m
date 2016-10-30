@@ -7,12 +7,17 @@
 //
 
 #import "DB.h"
+#import <Helpers/Helpers.h>
+
+static NSString *const PathContent = @"/Content";
+static NSString *const PathMap = @"/Map";
 
 
 
 @interface DB ()
 
 @property NSString *name;
+@property NSBundle *modelBundle;
 @property NSPersistentStore *store;
 @property NSPersistentStoreCoordinator *psc;
 @property NSManagedObjectModel *mom;
@@ -28,9 +33,9 @@
     self = [super init];
     if (self) {
         
-        bundle = bundle ? bundle : [NSBundle mainBundle];
-        
         self.name = name;
+        bundle = bundle ? bundle : [NSBundle mainBundle];
+        self.modelBundle = bundle;
         
         // Managed object model
         
@@ -66,6 +71,21 @@
         self.store = store;
     }
     return self;
+}
+
+- (void)importContent {
+    NSArray *URLs = [self.modelBundle URLsForResourcesWithExtension:PlistExtension subdirectory:PathContent];
+    for (NSURL *URL in URLs) {
+        NSString *name = URL.lastPathComponent.stringByDeletingPathExtension;
+        NSArray *array = [NSArray arrayWithContentsOfURL:URL];
+        Class class = NSClassFromString(name);
+        NSURL *URL = [self.modelBundle URLForResource:name withExtension:PlistExtension subdirectory:PathMap];
+        NSDictionary *map = [NSDictionary dictionaryWithContentsOfURL:URL];
+        for (NSDictionary *dictionary in array) {
+            NSManagedObject *object = [class create:self.moc];
+            [object importFromDictionary:dictionary usingMap:map];
+        }
+    }
 }
 
 - (NSManagedObjectContext *)newBackgroundContext {

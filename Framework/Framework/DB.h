@@ -15,6 +15,13 @@
 FOUNDATION_EXPORT double DBVersionNumber;
 FOUNDATION_EXPORT const unsigned char DBVersionString[];
 
+typedef NS_ENUM(NSUInteger, EntityState) {
+    EntityStateNormal,
+    EntityStateDeleted,
+    EntityStateCreated,
+    EntityStateUpdated
+};
+
 
 
 @interface DB : NSObject
@@ -22,12 +29,14 @@ FOUNDATION_EXPORT const unsigned char DBVersionString[];
 - (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle;
 
 @property (readonly) NSString *name;
+@property (readonly) NSBundle *modelBundle;
 
 @property (readonly) NSPersistentStore *store;
 @property (readonly) NSPersistentStoreCoordinator *psc;
 @property (readonly) NSManagedObjectModel *mom;
 @property (readonly) NSManagedObjectContext *moc;
 
+- (void)importContent;
 - (NSManagedObjectContext *)newBackgroundContext;
 - (void)performBackgroundTask:(void (^)(NSManagedObjectContext *))block;
 
