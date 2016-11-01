@@ -24,7 +24,30 @@ typedef NS_ENUM(NSUInteger, EntityState) {
 
 
 
-@interface DB : NSObject
+
+
+
+
+
+
+
+@protocol DB <NSObject>
+
+@optional
+- (void)didImportObject:(NSManagedObject *)object fromDictionary:(NSDictionary *)dictionary;
+
+@end
+
+
+
+
+
+
+
+
+
+
+@interface DB : NSObject <DB>
 
 - (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle;
 
@@ -37,6 +60,7 @@ typedef NS_ENUM(NSUInteger, EntityState) {
 @property (readonly) NSManagedObjectContext *moc;
 
 - (void)importContent;
+- (NSDictionary *)mapForClass:(Class)cls;
 - (NSManagedObjectContext *)newBackgroundContext;
 - (void)performBackgroundTask:(void (^)(NSManagedObjectContext *))block;
 

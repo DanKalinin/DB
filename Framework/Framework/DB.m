@@ -74,9 +74,17 @@ static NSString *const PathMap = @"/Map";
 }
 
 - (void)importContent {
-    NSArray *URLs = [self.modelBundle URLsForResourcesWithExtension:PlistExtension subdirectory:PathContent];
+    
+    SEL selector = @selector(didImportObject:fromDictionary:);
+    BOOL inform = [self respondsToSelector:selector];
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastPathComponent" ascending:YES];
+    NSMutableArray *URLs = [self.modelBundle URLsForResourcesWithExtension:PlistExtension subdirectory:PathContent].mutableCopy;
+    [URLs sortUsingDescriptors:@[descriptor]];
+    
     for (NSURL *URL in URLs) {
         NSString *name = URL.lastPathComponent.stringByDeletingPathExtension;
+        name = [name componentsSeparatedByString:@"-"].lastObject;
         NSArray *array = [NSArray arrayWithContentsOfURL:URL];
         Class class = NSClassFromString(name);
         NSURL *URL = [self.modelBundle URLForResource:name withExtension:PlistExtension subdirectory:PathMap];
@@ -84,8 +92,18 @@ static NSString *const PathMap = @"/Map";
         for (NSDictionary *dictionary in array) {
             NSManagedObject *object = [class create:self.moc];
             [object importFromDictionary:dictionary usingMap:map];
+            if (inform) {
+                [self didImportObject:object fromDictionary:dictionary];
+            }
         }
     }
+}
+
+- (NSDictionary *)mapForClass:(Class)cls {
+    NSString *name = NSStringFromClass(cls);
+    NSURL *URL = [self.modelBundle URLForResource:name withExtension:PlistExtension subdirectory:PathMap];
+    NSDictionary *map = [NSDictionary dictionaryWithContentsOfURL:URL];
+    return map;
 }
 
 - (NSManagedObjectContext *)newBackgroundContext {
