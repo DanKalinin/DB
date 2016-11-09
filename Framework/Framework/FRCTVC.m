@@ -46,6 +46,12 @@
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id <NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
+    NSString *title = sectionInfo.name;
+    return title;
+}
+
 #pragma mark - Fetched results controller
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
