@@ -37,7 +37,7 @@
 		374391EF1D91C815005E1075 /* NSManagedObject+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+DB.m"; sourceTree = "<group>"; };
 		3784E7601DB54EE300D4E508 /* FRCTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRCTVC.h; sourceTree = "<group>"; };
 		3784E7611DB54EE300D4E508 /* FRCTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRCTVC.m; sourceTree = "<group>"; };
-		3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Framework.xcodeproj; path = ../../../../Helpers/Framework/Framework.xcodeproj; sourceTree = "<group>"; };
+		3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Framework.xcodeproj; path = ../../Helpers/Framework/Framework.xcodeproj; sourceTree = "<group>"; };
 		3784E7951DB61E5400D4E508 /* NSManagedObjectModel+DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+DB.h"; sourceTree = "<group>"; };
 		3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+DB.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
