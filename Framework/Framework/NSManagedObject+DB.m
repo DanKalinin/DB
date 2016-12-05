@@ -8,6 +8,8 @@
 
 #import "NSManagedObject+DB.h"
 
+static NSString *const IgnoreKey = @"ignore";
+
 
 
 @implementation NSManagedObject (DB)
@@ -80,6 +82,10 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     NSArray *keys = self.entity.attributesByName.allKeys;
     for (NSString *key in keys) {
+        NSAttributeDescription *attribute = self.entity.attributesByName[key];
+        NSNumber *ignore = attribute.userInfo[IgnoreKey];
+        if (ignore.boolValue) continue;
+        
         id value = [self valueForKey:key];
         dictionary[key] = value;
     }
