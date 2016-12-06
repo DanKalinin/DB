@@ -69,6 +69,17 @@ static NSString *const PathMap = @"/Map";
         NSPersistentStore *store = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
         NSAssert(store, error.localizedDescription);
         self.store = store;
+        
+        NSUserDefaults *defaults = [NSUserDefaults.alloc initWithSuiteName:self.modelBundle.bundleIdentifier];
+        NSString *localization = [NSLocale.currentLocale objectForKey:NSLocaleLanguageCode];
+        NSString *importedKey = [NSString stringWithFormat:@"imported.%@", localization];
+        BOOL imported = [defaults boolForKey:importedKey];
+        if (!imported) {
+            [self importContent];
+            [self.moc save:nil];
+            [defaults setBool:YES forKey:importedKey];
+            [defaults synchronize];
+        }
     }
     return self;
 }
@@ -87,7 +98,6 @@ static NSString *const PathMap = @"/Map";
         name = [name componentsSeparatedByString:@"-"].lastObject;
         NSArray *array = [NSArray arrayWithContentsOfURL:URL];
         Class class = NSClassFromString(name);
-        NSURL *URL = [self.modelBundle URLForResource:name withExtension:PlistExtension subdirectory:PathMap];
         NSDictionary *map = [NSDictionary dictionaryWithContentsOfURL:URL];
         for (NSDictionary *dictionary in array) {
             NSManagedObject *object = [class create:self.moc];
