@@ -16,6 +16,8 @@
 		3784E7941DB61E0600D4E508 /* Helpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3784E7931DB61DFA00D4E508 /* Helpers.framework */; };
 		3784E7971DB61E5400D4E508 /* NSManagedObjectModel+DB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3784E7951DB61E5400D4E508 /* NSManagedObjectModel+DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3784E7981DB61E5400D4E508 /* NSManagedObjectModel+DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */; };
+		E7894D591DF97CEF00B5145E /* FRCCVC.h in Headers */ = {isa = PBXBuildFile; fileRef = E7894D571DF97CEF00B5145E /* FRCCVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E7894D5A1DF97CEF00B5145E /* FRCCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E7894D581DF97CEF00B5145E /* FRCCVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		3784E78E1DB61DFA00D4E508 /* Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Framework.xcodeproj; path = ../../Helpers/Framework/Framework.xcodeproj; sourceTree = "<group>"; };
 		3784E7951DB61E5400D4E508 /* NSManagedObjectModel+DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+DB.h"; sourceTree = "<group>"; };
 		3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+DB.m"; sourceTree = "<group>"; };
+		E7894D571DF97CEF00B5145E /* FRCCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRCCVC.h; sourceTree = "<group>"; };
+		E7894D581DF97CEF00B5145E /* FRCCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRCCVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 				374391EF1D91C815005E1075 /* NSManagedObject+DB.m */,
 				3784E7601DB54EE300D4E508 /* FRCTVC.h */,
 				3784E7611DB54EE300D4E508 /* FRCTVC.m */,
+				E7894D571DF97CEF00B5145E /* FRCCVC.h */,
+				E7894D581DF97CEF00B5145E /* FRCCVC.m */,
 				3743919F1D914819005E1075 /* Info.plist */,
 			);
 			path = Framework;
@@ -121,6 +127,7 @@
 				374391F21D91C815005E1075 /* NSManagedObject+DB.h in Headers */,
 				374391A81D91482C005E1075 /* DB.h in Headers */,
 				3784E7971DB61E5400D4E508 /* NSManagedObjectModel+DB.h in Headers */,
+				E7894D591DF97CEF00B5145E /* FRCCVC.h in Headers */,
 				3784E7621DB54EE300D4E508 /* FRCTVC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +219,7 @@
 				3784E7631DB54EE300D4E508 /* FRCTVC.m in Sources */,
 				374391A91D91482C005E1075 /* DB.m in Sources */,
 				374391F31D91C815005E1075 /* NSManagedObject+DB.m in Sources */,
+				E7894D5A1DF97CEF00B5145E /* FRCCVC.m in Sources */,
 				3784E7981DB61E5400D4E508 /* NSManagedObjectModel+DB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

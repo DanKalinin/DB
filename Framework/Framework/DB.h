@@ -11,6 +11,7 @@
 #import <DB/NSManagedObjectModel+DB.h>
 #import <DB/NSManagedObject+DB.h>
 #import <DB/FRCTVC.h>
+#import <DB/FRCCVC.h>
 
 FOUNDATION_EXPORT double DBVersionNumber;
 FOUNDATION_EXPORT const unsigned char DBVersionString[];
