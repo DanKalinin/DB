@@ -28,4 +28,7 @@
 - (void)setPrimitiveValue:(id)value forKey:(NSString *)key notify:(BOOL)notify;
 - (id)primitiveValueForKey:(NSString *)key notify:(BOOL)notify;
 
+- (void)push;
+- (void)pop;
+
 @end

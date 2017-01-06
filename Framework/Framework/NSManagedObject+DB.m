@@ -7,8 +7,17 @@
 //
 
 #import "NSManagedObject+DB.h"
+#import <objc/runtime.h>
 
 static NSString *const IgnoreKey = @"ignore";
+
+
+
+@interface NSManagedObject (DBSelectors)
+
+@property NSDictionary *objectDictionary;
+
+@end
 
 
 
@@ -119,6 +128,24 @@ static NSString *const IgnoreKey = @"ignore";
     }
     
     return value;
+}
+
+- (void)push {
+    self.objectDictionary = [self dictionaryWithValuesForKeys:self.entity.propertiesByName.allKeys];
+}
+
+- (void)pop {
+    [self setValuesForKeysWithDictionary:self.objectDictionary];
+}
+
+#pragma mark - Accessors
+
+- (void)setObjectDictionary:(NSDictionary *)objectDictionary {
+    objc_setAssociatedObject(self, @selector(objectDictionary), objectDictionary, OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSDictionary *)objectDictionary {
+    return objc_getAssociatedObject(self, @selector(objectDictionary));
 }
 
 #pragma mark - Helpers
