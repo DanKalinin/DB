@@ -16,7 +16,14 @@
 
 
 
-@implementation FRCCVC
+@implementation FRCCVC {
+    NSMutableIndexSet *insertedSections;
+    NSMutableIndexSet *deletedSections;
+    
+    NSMutableOrderedSet *insertedItems;
+    NSMutableOrderedSet *deletedItems;
+    NSMutableOrderedSet *updatedItems;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -48,36 +55,56 @@
 
 #pragma mark - Fetched results controller
 
-//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-//    [self.tableView beginUpdates];
-//}
-//
-//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-//    NSIndexSet *sections = [NSIndexSet indexSetWithIndex:sectionIndex];
-//    if (type == NSFetchedResultsChangeInsert) {
-//        [self.tableView insertSections:sections withRowAnimation:self.insertionAnimation];
-//    } else if (type == NSFetchedResultsChangeDelete) {
-//        [self.tableView deleteSections:sections withRowAnimation:self.deletionAnimation];
-//    }
-//}
-//
-//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-//    if (type == NSFetchedResultsChangeInsert) {
-//        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
-//    } else if (type == NSFetchedResultsChangeDelete) {
-//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
-//    } else if (type == NSFetchedResultsChangeMove) {
-//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
-//        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
-//    } else if (type == NSFetchedResultsChangeUpdate) {
-//        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//        [self configureCell:cell atIndexPath:indexPath];
-//    }
-//}
-//
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-//    [self.tableView endUpdates];
-//}
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    insertedSections = [NSMutableIndexSet indexSet];
+    deletedSections = [NSMutableIndexSet indexSet];
+    
+    insertedItems = [NSMutableOrderedSet orderedSet];
+    deletedItems = [NSMutableOrderedSet orderedSet];
+    updatedItems = [NSMutableOrderedSet orderedSet];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    if (type == NSFetchedResultsChangeInsert) {
+        [insertedSections addIndex:sectionIndex];
+    } else if (type == NSFetchedResultsChangeDelete) {
+        [deletedSections addIndex:sectionIndex];
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    if (type == NSFetchedResultsChangeInsert) {
+        [insertedItems addObject:newIndexPath];
+    } else if (type == NSFetchedResultsChangeDelete) {
+        [deletedItems addObject:indexPath];
+    } else if (type == NSFetchedResultsChangeMove) {
+        [deletedItems addObject:indexPath];
+        [insertedItems addObject:newIndexPath];
+    } else if (type == NSFetchedResultsChangeUpdate) {
+        [updatedItems addObject:indexPath];
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.collectionView performBatchUpdates:^{
+        if (insertedSections.count > 0) {
+            [self.collectionView insertSections:insertedSections];
+        }
+        if (deletedSections.count > 0) {
+            [self.collectionView deleteSections:deletedSections];
+        }
+        
+        if (insertedItems.count > 0) {
+            [self.collectionView insertItemsAtIndexPaths:insertedItems.array];
+        }
+        if (deletedItems.count > 0) {
+            [self.collectionView deleteItemsAtIndexPaths:deletedItems.array];
+        }
+        if (updatedItems.count > 0) {
+            [self.collectionView reloadItemsAtIndexPaths:updatedItems.array];
+        }
+    } completion:nil];
+}
 
 #pragma mark - Helpers
 
