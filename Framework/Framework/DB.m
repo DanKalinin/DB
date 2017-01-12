@@ -40,17 +40,17 @@ static NSString *const PathMap = @"/Map";
         // Managed object model
         
         NSURL *momURL = [bundle URLForResource:name withExtension:@"momd"];
-        NSManagedObjectModel *mom = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
+        NSManagedObjectModel *mom = [NSManagedObjectModel.alloc initWithContentsOfURL:momURL];
         self.mom = mom;
         
         // Persistent store coordinator
         
-        NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+        NSPersistentStoreCoordinator *psc = [NSPersistentStoreCoordinator.alloc initWithManagedObjectModel:mom];
         self.psc = psc;
         
         // Managed object context
         
-        NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        NSManagedObjectContext *moc = [NSManagedObjectContext.alloc initWithConcurrencyType:NSMainQueueConcurrencyType];
         moc.persistentStoreCoordinator = psc;
         self.moc = moc;
         
@@ -117,7 +117,7 @@ static NSString *const PathMap = @"/Map";
 }
 
 - (NSManagedObjectContext *)newBackgroundContext {
-    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    NSManagedObjectContext *moc = [NSManagedObjectContext.alloc initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     moc.persistentStoreCoordinator = self.psc;
     return moc;
 }
