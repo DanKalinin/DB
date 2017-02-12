@@ -73,6 +73,12 @@ static NSString *const IgnoreKey = @"ignore";
 
 #pragma clang diagnostic pop
 
++ (NSUInteger)count:(NSManagedObjectContext *)moc {
+    NSFetchRequest *fr = self.fetchRequest;
+    NSUInteger count = [moc countForFetchRequest:fr error:nil];
+    return count;
+}
+
 - (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map {
     
     dictionary = [self dictionary:dictionary usingMap:map];

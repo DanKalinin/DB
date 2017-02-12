@@ -21,6 +21,7 @@
 + (void)delete:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;
 
 + (NSFetchRequest *)fetchRequest;
++ (NSUInteger)count:(NSManagedObjectContext *)moc;
 
 - (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map;
 - (NSDictionary *)exportToDictionaryUsingMap:(NSDictionary *)map;
