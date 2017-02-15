@@ -68,6 +68,11 @@
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    if ((type == NSFetchedResultsChangeUpdate) && newIndexPath && ![indexPath isEqual:newIndexPath]) {
+        type = NSFetchedResultsChangeMove;
+    }
+    
     if (type == NSFetchedResultsChangeInsert) {
         [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
     } else if (type == NSFetchedResultsChangeDelete) {
