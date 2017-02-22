@@ -70,7 +70,13 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
     if ((type == NSFetchedResultsChangeUpdate) && newIndexPath) {
-        type = NSFetchedResultsChangeMove;
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
+        
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:newIndexPath];
+        [self configureCell:cell atIndexPath:newIndexPath];
+        
+        return;
     }
     
     if (type == NSFetchedResultsChangeInsert) {
