@@ -17,6 +17,8 @@
 
 
 @implementation FRCCVC {
+    BOOL loaded;
+    
     NSMutableIndexSet *insertedSections;
     NSMutableIndexSet *deletedSections;
     
@@ -31,6 +33,43 @@
         
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (loaded) return;
+    loaded = YES;
+    
+    if (_object) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:_object];
+        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:(UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally)];
+    }
+    
+    if (_objects) {
+        for (NSManagedObject *object in _objects) {
+            NSIndexPath *indexPath = [self.frc indexPathForObject:object];
+            if (indexPath) {
+                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+            }
+        }
+    }
+}
+
+#pragma mark - Accessors
+
+- (NSManagedObject *)object {
+    NSManagedObject *object = [self.frc objectAtIndexPath:self.collectionView.indexPathsForSelectedItems.firstObject];
+    return object;
+}
+
+- (NSSet<NSManagedObject *> *)objects {
+    NSMutableSet *objects = [NSMutableSet set];
+    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
+        NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
+        [objects addObject:object];
+    }
+    return objects;
 }
 
 #pragma mark - Collection view

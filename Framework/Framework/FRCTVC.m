@@ -17,7 +17,9 @@
 
 
 
-@implementation FRCTVC
+@implementation FRCTVC {
+    BOOL loaded;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -25,6 +27,43 @@
         self.insertionAnimation = self.deletionAnimation = UITableViewRowAnimationFade;
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (loaded) return;
+    loaded = YES;
+    
+    if (_object) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:_object];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    }
+    
+    if (_objects) {
+        for (NSManagedObject *object in _objects) {
+            NSIndexPath *indexPath = [self.frc indexPathForObject:object];
+            if (indexPath) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+    }
+}
+
+#pragma mark - Accessors
+
+- (NSManagedObject *)object {
+    NSManagedObject *object = [self.frc objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+    return object;
+}
+
+- (NSSet<NSManagedObject *> *)objects {
+    NSMutableSet *objects = [NSMutableSet set];
+    for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
+        NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
+        [objects addObject:object];
+    }
+    return objects;
 }
 
 #pragma mark - Table view
