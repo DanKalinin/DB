@@ -16,6 +16,7 @@
 
 + (instancetype)find:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;
 + (instancetype)findOrCreate:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;
++ (instancetype)replace:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;
 
 + (NSArray *)fetch:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;
 + (void)delete:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;

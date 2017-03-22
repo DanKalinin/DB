@@ -46,6 +46,16 @@ static NSString *const IgnoreKey = @"ignore";
     return mo;
 }
 
++ (instancetype)replace:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc {
+    NSArray *mos = [self fetch:predicate moc:moc];
+    for (NSManagedObject *mo in mos) {
+        [moc deleteObject:mo];
+    }
+    
+    NSManagedObject *mo = [self create:moc];
+    return mo;
+}
+
 + (NSArray *)fetch:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc {
     NSFetchRequest *fr = [self fetchRequest];
     fr.predicate = predicate;
