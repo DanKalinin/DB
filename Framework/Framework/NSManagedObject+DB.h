@@ -30,6 +30,8 @@
 - (void)setPrimitiveValue:(id)value forKey:(NSString *)key notify:(BOOL)notify;
 - (id)primitiveValueForKey:(NSString *)key notify:(BOOL)notify;
 
+- (void)replaceValue:(NSManagedObject *)value forKey:(NSString *)key;
+
 - (void)push;
 - (void)pop;
 

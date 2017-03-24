@@ -146,6 +146,18 @@ static NSString *const IgnoreKey = @"ignore";
     return value;
 }
 
+- (void)replaceValue:(NSManagedObject *)value forKey:(NSString *)key {
+    NSManagedObject *currentValue = [self primitiveValueForKey:key notify:NO];
+    
+    if ([value isEqual:currentValue]) return;
+    
+    if (currentValue) {
+        [self.managedObjectContext deleteObject:currentValue];
+    }
+    
+    [self setValue:value forKey:key];
+}
+
 - (void)push {
     self.objectDictionary = [self dictionaryWithValuesForKeys:self.entity.propertiesByName.allKeys];
 }
