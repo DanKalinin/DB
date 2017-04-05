@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <DB/NSManagedObjectModel+DB.h>
 #import <DB/NSManagedObject+DB.h>
+#import <DB/NSArray+DB.h>
 #import <DB/FRCTVC.h>
 #import <DB/FRCCVC.h>
 
