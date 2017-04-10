@@ -40,7 +40,7 @@
 
 - (void)executeFetchRequest:(NSFetchRequest *)fr {
     if (fr.predicate) {
-        [self filteredArrayUsingPredicate:fr.predicate];
+        [self filterUsingPredicate:fr.predicate];
     }
     if (fr.sortDescriptors.count > 0) {
         [self sortUsingDescriptors:fr.sortDescriptors];
