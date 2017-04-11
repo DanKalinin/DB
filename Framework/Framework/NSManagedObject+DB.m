@@ -166,6 +166,17 @@ static NSString *const IgnoreKey = @"ignore";
     [self setValuesForKeysWithDictionary:self.objectDictionary];
 }
 
+- (void)importFromObject:(NSManagedObject *)mo {
+    NSSet *selfKeys = [NSSet setWithArray:self.entity.propertiesByName.allKeys];
+    NSSet *moKeys = [NSSet setWithArray:mo.entity.propertiesByName.allKeys];
+    
+    NSMutableSet *keys = selfKeys.mutableCopy;
+    [keys intersectSet:moKeys];
+    
+    NSDictionary *dictionary = [mo dictionaryWithValuesForKeys:keys.allObjects];
+    [self setValuesForKeysWithDictionary:dictionary];
+}
+
 #pragma mark - Accessors
 
 - (void)setObjectDictionary:(NSDictionary *)objectDictionary {

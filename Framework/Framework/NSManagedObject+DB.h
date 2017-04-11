@@ -35,4 +35,6 @@
 - (void)push;
 - (void)pop;
 
+- (void)importFromObject:(NSManagedObject *)mo;
+
 @end
