@@ -17,8 +17,8 @@
 @property UITableViewRowAnimation insertionAnimation;
 @property UITableViewRowAnimation deletionAnimation;
 
-@property (nonatomic) NSManagedObject *object;
-@property (nonatomic) NSSet<NSManagedObject *> *objects;
+@property NSManagedObject *object;
+@property NSSet<NSManagedObject *> *objects;
 
 - (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;

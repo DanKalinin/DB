@@ -35,35 +35,17 @@
     if (loaded) return;
     loaded = YES;
     
-    if (_object) {
-        NSIndexPath *indexPath = [self.frc indexPathForObject:_object];
+    if (self.object) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:self.object];
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     }
     
-    if (_objects) {
-        for (NSManagedObject *object in _objects) {
-            NSIndexPath *indexPath = [self.frc indexPathForObject:object];
-            if (indexPath) {
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            }
+    for (NSManagedObject *object in self.objects) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:object];
+        if (indexPath) {
+            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }
     }
-}
-
-#pragma mark - Accessors
-
-- (NSManagedObject *)object {
-    NSManagedObject *object = [self.frc objectAtIndexPath:self.tableView.indexPathForSelectedRow];
-    return object;
-}
-
-- (NSSet<NSManagedObject *> *)objects {
-    NSMutableSet *objects = [NSMutableSet set];
-    for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
-        NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
-        [objects addObject:object];
-    }
-    return objects;
 }
 
 #pragma mark - Table view
@@ -90,6 +72,29 @@
     id <NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
     NSString *title = sectionInfo.name;
     return title;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
+    
+    NSMutableSet *objects = self.objects.mutableCopy;
+    [objects addObject:object];
+    
+    self.object = object;
+    self.objects = objects;
+    
+    return indexPath;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
+    
+    NSMutableSet *objects = self.objects.mutableCopy;
+    [objects removeObject:object];
+    
+    self.objects = objects;
+    
+    return indexPath;
 }
 
 #pragma mark - Fetched results controller

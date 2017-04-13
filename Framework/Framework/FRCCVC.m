@@ -41,35 +41,17 @@
     if (loaded) return;
     loaded = YES;
     
-    if (_object) {
-        NSIndexPath *indexPath = [self.frc indexPathForObject:_object];
+    if (self.object) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:self.object];
         [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:(UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally)];
     }
     
-    if (_objects) {
-        for (NSManagedObject *object in _objects) {
-            NSIndexPath *indexPath = [self.frc indexPathForObject:object];
-            if (indexPath) {
-                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-            }
+    for (NSManagedObject *object in self.objects) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:object];
+        if (indexPath) {
+            [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         }
     }
-}
-
-#pragma mark - Accessors
-
-- (NSManagedObject *)object {
-    NSManagedObject *object = [self.frc objectAtIndexPath:self.collectionView.indexPathsForSelectedItems.firstObject];
-    return object;
-}
-
-- (NSSet<NSManagedObject *> *)objects {
-    NSMutableSet *objects = [NSMutableSet set];
-    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
-        NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
-        [objects addObject:object];
-    }
-    return objects;
 }
 
 #pragma mark - Collection view
@@ -90,6 +72,25 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
+    
+    NSMutableSet *objects = self.objects.mutableCopy;
+    [objects addObject:object];
+    
+    self.object = object;
+    self.objects = objects;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
+    
+    NSMutableSet *objects = self.objects.mutableCopy;
+    [objects removeObject:object];
+    
+    self.objects = objects;
 }
 
 #pragma mark - Fetched results controller
