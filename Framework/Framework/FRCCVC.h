@@ -15,8 +15,8 @@
 
 @property NSFetchedResultsController *frc;
 
-@property NSManagedObject *object;
-@property NSSet<NSManagedObject *> *objects;
+@property __kindof NSManagedObject *object;
+@property NSSet<__kindof NSManagedObject *> *objects;
 
 - (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
