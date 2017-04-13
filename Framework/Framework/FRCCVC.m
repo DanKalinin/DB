@@ -35,8 +35,8 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
     if (loaded) return;
     loaded = YES;
