@@ -18,12 +18,16 @@
 
 
 @implementation FRCTVC {
-    BOOL loaded;
+    BOOL _loaded;
+    
+    NSMutableSet *_objects;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
+        _objects = [NSMutableSet set];
+        
         self.insertionAnimation = self.deletionAnimation = UITableViewRowAnimationFade;
     }
     return self;
@@ -32,8 +36,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (loaded) return;
-    loaded = YES;
+    if (_loaded) return;
+    _loaded = YES;
     
     if (self.object) {
         NSIndexPath *indexPath = [self.frc indexPathForObject:self.object];
@@ -46,6 +50,16 @@
             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }
     }
+}
+
+#pragma mark - Accessors
+
+- (void)setObjects:(NSSet<NSManagedObject *> *)objects {
+    _objects = [NSMutableSet setWithSet:objects];
+}
+
+- (NSSet<NSManagedObject *> *)objects {
+    return _objects;
 }
 
 #pragma mark - Table view
@@ -76,25 +90,14 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
-    
-    NSMutableSet *objects = self.objects.mutableCopy;
-    [objects addObject:object];
-    
+    [_objects addObject:object];
     self.object = object;
-    self.objects = objects;
-    
     return indexPath;
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
-    
-    NSMutableSet *objects = self.objects.mutableCopy;
-    [objects removeObject:object];
-    
-    self.objects = objects;
-    
-    return indexPath;
+    [_objects removeObject:object];
 }
 
 #pragma mark - Fetched results controller

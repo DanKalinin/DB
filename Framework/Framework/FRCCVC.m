@@ -17,20 +17,22 @@
 
 
 @implementation FRCCVC {
-    BOOL loaded;
+    BOOL _loaded;
     
-    NSMutableIndexSet *insertedSections;
-    NSMutableIndexSet *deletedSections;
+    NSMutableIndexSet *_insertedSections;
+    NSMutableIndexSet *_deletedSections;
     
-    NSMutableOrderedSet *insertedItems;
-    NSMutableOrderedSet *deletedItems;
-    NSMutableOrderedSet *updatedItems;
+    NSMutableOrderedSet *_insertedItems;
+    NSMutableOrderedSet *_deletedItems;
+    NSMutableOrderedSet *_updatedItems;
+    
+    NSMutableSet *_objects;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        
+        _objects = [NSMutableSet set];
     }
     return self;
 }
@@ -38,8 +40,8 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    if (loaded) return;
-    loaded = YES;
+    if (_loaded) return;
+    _loaded = YES;
     
     if (self.object) {
         NSIndexPath *indexPath = [self.frc indexPathForObject:self.object];
@@ -52,6 +54,16 @@
             [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         }
     }
+}
+
+#pragma mark - Accessors
+
+- (void)setObjects:(NSSet<NSManagedObject *> *)objects {
+    _objects = [NSMutableSet setWithSet:objects];
+}
+
+- (NSSet<NSManagedObject *> *)objects {
+    return _objects;
 }
 
 #pragma mark - Collection view
@@ -74,74 +86,67 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
-    
-    NSMutableSet *objects = self.objects.mutableCopy;
-    [objects addObject:object];
-    
+    [_objects addObject:object];
     self.object = object;
-    self.objects = objects;
+    return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
-    
-    NSMutableSet *objects = self.objects.mutableCopy;
-    [objects removeObject:object];
-    
-    self.objects = objects;
+    [_objects removeObject:object];
 }
 
 #pragma mark - Fetched results controller
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    insertedSections = [NSMutableIndexSet indexSet];
-    deletedSections = [NSMutableIndexSet indexSet];
+    _insertedSections = [NSMutableIndexSet indexSet];
+    _deletedSections = [NSMutableIndexSet indexSet];
     
-    insertedItems = [NSMutableOrderedSet orderedSet];
-    deletedItems = [NSMutableOrderedSet orderedSet];
-    updatedItems = [NSMutableOrderedSet orderedSet];
+    _insertedItems = [NSMutableOrderedSet orderedSet];
+    _deletedItems = [NSMutableOrderedSet orderedSet];
+    _updatedItems = [NSMutableOrderedSet orderedSet];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     if (type == NSFetchedResultsChangeInsert) {
-        [insertedSections addIndex:sectionIndex];
+        [_insertedSections addIndex:sectionIndex];
     } else if (type == NSFetchedResultsChangeDelete) {
-        [deletedSections addIndex:sectionIndex];
+        [_deletedSections addIndex:sectionIndex];
     }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     if (type == NSFetchedResultsChangeInsert) {
-        [insertedItems addObject:newIndexPath];
+        [_insertedItems addObject:newIndexPath];
     } else if (type == NSFetchedResultsChangeDelete) {
-        [deletedItems addObject:indexPath];
+        [_deletedItems addObject:indexPath];
     } else if (type == NSFetchedResultsChangeMove) {
-        [deletedItems addObject:indexPath];
-        [insertedItems addObject:newIndexPath];
+        [_deletedItems addObject:indexPath];
+        [_insertedItems addObject:newIndexPath];
     } else if (type == NSFetchedResultsChangeUpdate) {
-        [updatedItems addObject:indexPath];
+        [_updatedItems addObject:indexPath];
     }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.collectionView performBatchUpdates:^{
-        if (insertedSections.count > 0) {
-            [self.collectionView insertSections:insertedSections];
+        if (_insertedSections.count > 0) {
+            [self.collectionView insertSections:_insertedSections];
         }
-        if (deletedSections.count > 0) {
-            [self.collectionView deleteSections:deletedSections];
+        if (_deletedSections.count > 0) {
+            [self.collectionView deleteSections:_deletedSections];
         }
         
-        if (insertedItems.count > 0) {
-            [self.collectionView insertItemsAtIndexPaths:insertedItems.array];
+        if (_insertedItems.count > 0) {
+            [self.collectionView insertItemsAtIndexPaths:_insertedItems.array];
         }
-        if (deletedItems.count > 0) {
-            [self.collectionView deleteItemsAtIndexPaths:deletedItems.array];
+        if (_deletedItems.count > 0) {
+            [self.collectionView deleteItemsAtIndexPaths:_deletedItems.array];
         }
-        if (updatedItems.count > 0) {
-            [self.collectionView reloadItemsAtIndexPaths:updatedItems.array];
+        if (_updatedItems.count > 0) {
+            [self.collectionView reloadItemsAtIndexPaths:_updatedItems.array];
         }
     } completion:nil];
 }
