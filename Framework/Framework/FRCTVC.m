@@ -100,6 +100,14 @@
     [_objects removeObject:object];
 }
 
+- (void)tableView:(UITableView *)tableView didToggleSelectAllButton:(UIButton *)button {
+    if (button.selected) {
+        [_objects addObjectsFromArray:self.frc.fetchedObjects];
+    } else {
+        [_objects removeAllObjects];
+    }
+}
+
 #pragma mark - Fetched results controller
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
