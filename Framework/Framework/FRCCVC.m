@@ -43,15 +43,19 @@
     if (_loaded) return;
     _loaded = YES;
     
-    if (self.object) {
-        NSIndexPath *indexPath = [self.frc indexPathForObject:self.object];
-        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:(UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally)];
-    }
-    
-    [self selectObjects];
+    UICollectionViewScrollPosition position = (self.objects.count == 1) ? (UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally) : UICollectionViewScrollPositionNone;
+    [self selectObjects:position];
 }
 
 #pragma mark - Accessors
+
+- (void)setObject:(NSManagedObject *)object {
+    _objects = [NSMutableSet setWithObject:object];
+}
+
+- (NSManagedObject *)object {
+    return _objects.anyObject;
+}
 
 - (void)setObjects:(NSSet<NSManagedObject *> *)objects {
     _objects = [NSMutableSet setWithSet:objects];
@@ -84,7 +88,6 @@
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
     [_objects addObject:object];
-    self.object = object;
     return YES;
 }
 
@@ -143,9 +146,9 @@
         if (_updatedItems.count > 0) {
             [self.collectionView reloadItemsAtIndexPaths:_updatedItems.array];
         }
-    } completion:^(BOOL finished) {
-        [self selectObjects];
-    }];
+    } completion:nil];
+    
+    [self selectObjects:UICollectionViewScrollPositionNone];
 }
 
 #pragma mark - Helpers
@@ -157,10 +160,10 @@
 - (void)configureCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 }
 
-- (void)selectObjects {
+- (void)selectObjects:(UICollectionViewScrollPosition)position {
     for (NSManagedObject *object in self.objects) {
         NSIndexPath *indexPath = [self.frc indexPathForObject:object];
-        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:position];
     }
 }
 

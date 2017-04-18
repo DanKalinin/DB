@@ -39,15 +39,19 @@
     if (_loaded) return;
     _loaded = YES;
     
-    if (self.object) {
-        NSIndexPath *indexPath = [self.frc indexPathForObject:self.object];
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-    }
-    
-    [self selectObjects];
+    UITableViewScrollPosition position = (self.objects.count == 1) ? UITableViewScrollPositionMiddle : UITableViewScrollPositionNone;
+    [self selectObjects:position];
 }
 
 #pragma mark - Accessors
+
+- (void)setObject:(NSManagedObject *)object {
+    _objects = [NSMutableSet setWithObject:object];
+}
+
+- (NSManagedObject *)object {
+    return _objects.anyObject;
+}
 
 - (void)setObjects:(NSSet<NSManagedObject *> *)objects {
     _objects = [NSMutableSet setWithSet:objects];
@@ -86,7 +90,6 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
     [_objects addObject:object];
-    self.object = object;
     return indexPath;
 }
 
@@ -145,7 +148,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
-    [self selectObjects];
+    [self selectObjects:UITableViewScrollPositionNone];
 }
 
 #pragma mark - Helpers
@@ -157,10 +160,10 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 }
 
-- (void)selectObjects {
+- (void)selectObjects:(UITableViewScrollPosition)position {
     for (NSManagedObject *object in self.objects) {
         NSIndexPath *indexPath = [self.frc indexPathForObject:object];
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:position];
     }
 }
 
