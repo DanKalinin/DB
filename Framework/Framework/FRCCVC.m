@@ -48,12 +48,7 @@
         [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:(UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally)];
     }
     
-    for (NSManagedObject *object in self.objects) {
-        NSIndexPath *indexPath = [self.frc indexPathForObject:object];
-        if (indexPath) {
-            [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-        }
-    }
+    [self selectObjects];
 }
 
 #pragma mark - Accessors
@@ -148,7 +143,9 @@
         if (_updatedItems.count > 0) {
             [self.collectionView reloadItemsAtIndexPaths:_updatedItems.array];
         }
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self selectObjects];
+    }];
 }
 
 #pragma mark - Helpers
@@ -158,6 +155,13 @@
 }
 
 - (void)configureCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (void)selectObjects {
+    for (NSManagedObject *object in self.objects) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:object];
+        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    }
 }
 
 @end

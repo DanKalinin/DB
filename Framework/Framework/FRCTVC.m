@@ -44,12 +44,7 @@
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     }
     
-    for (NSManagedObject *object in self.objects) {
-        NSIndexPath *indexPath = [self.frc indexPathForObject:object];
-        if (indexPath) {
-            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        }
-    }
+    [self selectObjects];
 }
 
 #pragma mark - Accessors
@@ -150,6 +145,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+    [self selectObjects];
 }
 
 #pragma mark - Helpers
@@ -159,6 +155,13 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (void)selectObjects {
+    for (NSManagedObject *object in self.objects) {
+        NSIndexPath *indexPath = [self.frc indexPathForObject:object];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 @end
