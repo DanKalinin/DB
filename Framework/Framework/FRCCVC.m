@@ -50,6 +50,7 @@
 #pragma mark - Accessors
 
 - (void)setObject:(NSManagedObject *)object {
+    if (!object) return;
     _objects = [NSMutableSet setWithObject:object];
 }
 
@@ -58,6 +59,7 @@
 }
 
 - (void)setObjects:(NSSet<NSManagedObject *> *)objects {
+    if (!objects) return;
     _objects = [NSMutableSet setWithSet:objects];
 }
 
