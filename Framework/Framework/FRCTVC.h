@@ -13,9 +13,10 @@
 
 @interface FRCTVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
+@property IBInspectable UITableViewRowAnimation insertionAnimation;
+@property IBInspectable UITableViewRowAnimation deletionAnimation;
+
 @property NSFetchedResultsController *frc;
-@property UITableViewRowAnimation insertionAnimation;
-@property UITableViewRowAnimation deletionAnimation;
 
 @property NSManagedObject *object;
 @property NSSet<NSManagedObject *> *objects;
