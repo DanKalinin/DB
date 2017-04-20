@@ -40,11 +40,16 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    if (_loaded) return;
-    _loaded = YES;
-    
-    UICollectionViewScrollPosition position = (self.objects.count == 1) ? (UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally) : UICollectionViewScrollPositionNone;
-    [self selectObjects:position];
+    if (_loaded) {
+        if (self.clearsSelectionOnViewWillAppear) {
+            [_objects removeAllObjects];
+        }
+    } else {
+        UICollectionViewScrollPosition position = (self.objects.count == 1) ? (UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally) : UICollectionViewScrollPositionNone;
+        [self selectObjects:position];
+        
+        _loaded = YES;
+    }
 }
 
 #pragma mark - Accessors
