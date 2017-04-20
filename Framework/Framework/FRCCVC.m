@@ -40,15 +40,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (_loaded) {
-        if (self.clearsSelectionOnViewWillAppear) {
-            [_objects removeAllObjects];
-        }
+    if (self.clearsSelectionOnViewWillAppear) {
+        [_objects removeAllObjects];
     } else {
+        if (_loaded) return;
+        _loaded = YES;
+        
         UICollectionViewScrollPosition position = (self.objects.count == 1) ? (UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally) : UICollectionViewScrollPositionNone;
         [self selectObjects:position];
-        
-        _loaded = YES;
     }
 }
 

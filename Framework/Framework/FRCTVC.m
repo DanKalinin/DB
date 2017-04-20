@@ -36,15 +36,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (_loaded) {
-        if (self.clearsSelectionOnViewWillAppear) {
-            [_objects removeAllObjects];
-        }
+    if (self.clearsSelectionOnViewWillAppear) {
+        [_objects removeAllObjects];
     } else {
+        if (_loaded) return;
+        _loaded = YES;
+        
         UITableViewScrollPosition position = (self.objects.count == 1) ? UITableViewScrollPositionMiddle : UITableViewScrollPositionNone;
         [self selectObjects:position];
-        
-        _loaded = YES;
     }
 }
 
