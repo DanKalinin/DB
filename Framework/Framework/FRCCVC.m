@@ -37,8 +37,8 @@
     return self;
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if (_loaded) {
         if (self.clearsSelectionOnViewWillAppear) {
