@@ -32,6 +32,8 @@
 
 - (void)replaceValue:(NSManagedObject *)value forKey:(NSString *)key;
 
+- (void)setNextValueForKey:(NSString *)key predicate:(NSPredicate *)predicate prefix:(NSString *)prefix suffix:(NSString *)suffix start:(NSInteger)start;
+
 - (void)push;
 - (void)pop;
 

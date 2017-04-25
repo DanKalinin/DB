@@ -158,6 +158,50 @@ static NSString *const IgnoreKey = @"ignore";
     [self setValue:value forKey:key];
 }
 
+- (void)setNextValueForKey:(NSString *)key predicate:(NSPredicate *)predicate prefix:(NSString *)prefix suffix:(NSString *)suffix start:(NSInteger)start {
+    
+    if (key.length == 0) return;
+    if ((prefix.length == 0) && (suffix.length == 0)) return;
+    
+    NSPredicate *notSelfPredicate = [NSPredicate predicateWithFormat:@"self != %@", self];
+    
+    NSString *value = [self valueForKey:key];
+    NSPredicate *valuePredicate;
+    NSString *valueFormat;
+    if ((prefix.length > 0) && (suffix.length == 0)) {
+        valuePredicate = [NSPredicate predicateWithFormat:@"%K ENDSWITH %@", key, value];
+        valueFormat = [NSString stringWithFormat:@"%@%%@", prefix];
+    } else if ((prefix.length == 0) && (suffix.length > 0)) {
+        valuePredicate = [NSPredicate predicateWithFormat:@"%K BEGINSWITH %@", key, value];
+        valueFormat = [NSString stringWithFormat:@"%%@%@", suffix];
+    } else {
+        valuePredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", key, value];
+        valueFormat = [NSString stringWithFormat:@"%@%%@%@", prefix, suffix];
+    }
+    
+    if (predicate) {
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, notSelfPredicate, valuePredicate]];
+    } else {
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[notSelfPredicate, valuePredicate]];
+    }
+    
+    NSManagedObject *object;
+    NSArray *objects = [self.class fetch:predicate moc:self.managedObjectContext];
+    predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
+    object = [objects filteredArrayUsingPredicate:predicate].firstObject;
+    if (object) {
+        NSString *nextValue;
+        while (object) {
+            nextValue = [NSString stringWithFormat:valueFormat, value, start];
+            predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, nextValue];
+            object = [objects filteredArrayUsingPredicate:predicate].firstObject;
+            start++;
+        }
+        
+        [self setValue:nextValue forKey:key];
+    }
+}
+
 - (void)push {
     self.objectDictionary = [self dictionaryWithValuesForKeys:self.entity.propertiesByName.allKeys];
 }
