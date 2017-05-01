@@ -12,6 +12,8 @@
 
 @interface NSManagedObject (DB)
 
++ (NSEntityDescription *)entity:(NSManagedObjectContext *)moc;
+
 + (instancetype)create:(NSManagedObjectContext *)moc;
 
 + (instancetype)find:(NSPredicate *)predicate moc:(NSManagedObjectContext *)moc;

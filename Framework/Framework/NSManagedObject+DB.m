@@ -23,6 +23,12 @@ static NSString *const IgnoreKey = @"ignore";
 
 @implementation NSManagedObject (DB)
 
++ (NSEntityDescription *)entity:(NSManagedObjectContext *)moc {
+    NSString *name = NSStringFromClass(self);
+    NSEntityDescription *entity = [NSEntityDescription entityForName:name inManagedObjectContext:moc];
+    return entity;
+}
+
 + (instancetype)create:(NSManagedObjectContext *)moc {
     NSString *name = NSStringFromClass(self);
     NSManagedObject *mo = [NSEntityDescription insertNewObjectForEntityForName:name inManagedObjectContext:moc];
