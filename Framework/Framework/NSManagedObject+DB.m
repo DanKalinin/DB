@@ -11,6 +11,12 @@
 
 static NSString *const IgnoreKey = @"ignore";
 
+typedef NS_ENUM(NSUInteger, NextValueMode) {
+    NextValueModePrefix,
+    NextValueModeSuffix,
+    NextValueModePrefixAndSuffix
+};
+
 
 
 @interface NSManagedObject (DBSelectors)
@@ -173,16 +179,16 @@ static NSString *const IgnoreKey = @"ignore";
     
     NSString *value = [self valueForKey:key];
     NSPredicate *valuePredicate;
-    NSString *valueFormat;
+    NextValueMode mode;
     if ((prefix.length > 0) && (suffix.length == 0)) {
         valuePredicate = [NSPredicate predicateWithFormat:@"%K ENDSWITH %@", key, value];
-        valueFormat = [NSString stringWithFormat:@"%@%%@", prefix];
+        mode = NextValueModePrefix;
     } else if ((prefix.length == 0) && (suffix.length > 0)) {
         valuePredicate = [NSPredicate predicateWithFormat:@"%K BEGINSWITH %@", key, value];
-        valueFormat = [NSString stringWithFormat:@"%%@%@", suffix];
+        mode = NextValueModeSuffix;
     } else {
         valuePredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", key, value];
-        valueFormat = [NSString stringWithFormat:@"%@%%@%@", prefix, suffix];
+        mode = NextValueModePrefixAndSuffix;
     }
     
     if (predicate) {
@@ -198,7 +204,18 @@ static NSString *const IgnoreKey = @"ignore";
     if (object) {
         NSString *nextValue;
         while (object) {
-            nextValue = [NSString stringWithFormat:valueFormat, value, start];
+            NSString *format;
+            if (mode == NextValueModePrefix) {
+                format = [NSString stringWithFormat:@"%@%%@", prefix];
+                nextValue = [NSString stringWithFormat:format, start, value];
+            } else if (mode == NextValueModeSuffix) {
+                format = [NSString stringWithFormat:@"%%@%@", suffix];
+                nextValue = [NSString stringWithFormat:format, value, start];
+            } else {
+                format = [NSString stringWithFormat:@"%@%%@%@", prefix, suffix];
+                nextValue = [NSString stringWithFormat:format, start, value, start];
+            }
+            
             predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, nextValue];
             object = [objects filteredArrayUsingPredicate:predicate].firstObject;
             start++;
