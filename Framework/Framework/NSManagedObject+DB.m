@@ -170,7 +170,7 @@ typedef NS_ENUM(NSUInteger, NextValueMode) {
     [self setValue:value forKey:key];
 }
 
-- (void)setNextValueForKey:(NSString *)key predicate:(NSPredicate *)predicate prefix:(NSString *)prefix suffix:(NSString *)suffix start:(NSInteger)start {
+- (void)setNextValueForKey:(NSString *)key predicate:(NSPredicate *)predicate prefix:(NSString *)prefix suffix:(NSString *)suffix start:(NSInteger)start affectFirst:(BOOL)affectFirst {
     
     if (key.length == 0) return;
     if ((prefix.length == 0) && (suffix.length == 0)) return;
@@ -199,11 +199,19 @@ typedef NS_ENUM(NSUInteger, NextValueMode) {
     
     NSManagedObject *object;
     NSArray *objects = [self.class fetch:predicate moc:self.managedObjectContext];
-    predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
-    object = [objects filteredArrayUsingPredicate:predicate].firstObject;
-    if (object) {
+    
+    BOOL changeName;
+    if (affectFirst) {
+        changeName = YES;
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
+        object = [objects filteredArrayUsingPredicate:predicate].firstObject;
+        changeName = (object != nil);
+    }
+    
+    if (changeName) {
         NSString *nextValue;
-        while (object) {
+        do {
             NSString *format;
             if (mode == NextValueModePrefix) {
                 format = [NSString stringWithFormat:@"%@%%@", prefix];
@@ -219,7 +227,7 @@ typedef NS_ENUM(NSUInteger, NextValueMode) {
             predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, nextValue];
             object = [objects filteredArrayUsingPredicate:predicate].firstObject;
             start++;
-        }
+        } while (object);
         
         [self setValue:nextValue forKey:key];
     }
