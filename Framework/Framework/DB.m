@@ -34,7 +34,7 @@ static NSString *const PathMap = @"/Map";
     if (self) {
         
         self.name = name;
-        bundle = bundle ? bundle : [NSBundle mainBundle];
+        if (!bundle) bundle = [NSBundle mainBundle];
         self.modelBundle = bundle;
         
         // Managed object model
