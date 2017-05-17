@@ -71,7 +71,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger sections = self.frc.sections.count;
-    NSLog(@"sections - %i", (int)sections);
     return sections;
 }
 
