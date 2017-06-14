@@ -16,6 +16,9 @@
 @property IBInspectable UITableViewRowAnimation insertionAnimation;
 @property IBInspectable UITableViewRowAnimation deletionAnimation;
 
+@property IBInspectable NSString *orderKeyPath;
+@property IBInspectable BOOL orderInSection;
+
 @property NSFetchedResultsController *frc;
 
 @property NSManagedObject *object;

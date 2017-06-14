@@ -29,6 +29,7 @@
         _objects = [NSMutableSet set];
         
         self.insertionAnimation = self.deletionAnimation = UITableViewRowAnimationFade;
+        self.orderKeyPath = @"order";
     }
     return self;
 }
@@ -110,6 +111,33 @@
     } else {
         [_objects removeAllObjects];
     }
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    if ([destinationIndexPath isEqual:sourceIndexPath]) return;
+    
+    NSInteger sourceIndex, destinationIndex;
+    NSMutableArray *objects;
+    
+    if (self.orderInSection) {
+        sourceIndex = sourceIndexPath.row;
+        destinationIndex = destinationIndexPath.row;
+        id <NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[sourceIndexPath.section];
+        objects = sectionInfo.objects.mutableCopy;
+    } else {
+        sourceIndex = destinationIndex = 0;
+    }
+    
+    NSManagedObject *object = objects[sourceIndex];
+    [objects removeObjectAtIndex:sourceIndex];
+    [objects insertObject:object atIndex:destinationIndex];
+    
+    for (NSUInteger order = 0; order < objects.count; order++) {
+        object = objects[order];
+        [object setValue:@(order) forKeyPath:self.orderKeyPath];
+    }
+    
+    [self.frc.managedObjectContext save:nil];
 }
 
 #pragma mark - Fetched results controller
