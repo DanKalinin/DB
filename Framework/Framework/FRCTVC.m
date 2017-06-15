@@ -116,6 +116,9 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     if ([destinationIndexPath isEqual:sourceIndexPath]) return;
     
+    id <NSFetchedResultsControllerDelegate> delegate = self.frc.delegate;
+    self.frc.delegate = nil;
+    
     NSInteger sourceIndex, destinationIndex;
     NSMutableArray *objects;
     
@@ -138,6 +141,9 @@
     }
     
     [self.frc.managedObjectContext save:nil];
+    
+    [self.frc performFetch:nil];
+    self.frc.delegate = delegate;
 }
 
 #pragma mark - Fetched results controller
