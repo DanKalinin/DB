@@ -28,7 +28,7 @@
     if (self) {
         _objects = [NSMutableSet set];
         
-        self.insertionAnimation = self.deletionAnimation = UITableViewRowAnimationFade;
+        self.rowAnimation = UITableViewRowAnimationFade;
         self.orderKeyPath = @"order";
     }
     return self;
@@ -155,17 +155,17 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     NSIndexSet *sections = [NSIndexSet indexSetWithIndex:sectionIndex];
     if (type == NSFetchedResultsChangeInsert) {
-        [self.tableView insertSections:sections withRowAnimation:self.insertionAnimation];
+        [self.tableView insertSections:sections withRowAnimation:self.rowAnimation];
     } else if (type == NSFetchedResultsChangeDelete) {
-        [self.tableView deleteSections:sections withRowAnimation:self.deletionAnimation];
+        [self.tableView deleteSections:sections withRowAnimation:self.rowAnimation];
     }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
     if ([UIDevice.currentDevice.systemVersion isGreaterThanOrEqualToVersion:@"10"] && (type == NSFetchedResultsChangeUpdate) && newIndexPath) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
-        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.rowAnimation];
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.rowAnimation];
         
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:newIndexPath];
         [self configureCell:cell atIndexPath:newIndexPath];
@@ -174,12 +174,12 @@
     }
     
     if (type == NSFetchedResultsChangeInsert) {
-        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.rowAnimation];
     } else if (type == NSFetchedResultsChangeDelete) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.rowAnimation];
     } else if (type == NSFetchedResultsChangeMove) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.deletionAnimation];
-        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.insertionAnimation];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:self.rowAnimation];
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:self.rowAnimation];
     } else if (type == NSFetchedResultsChangeUpdate) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         [self configureCell:cell atIndexPath:indexPath];

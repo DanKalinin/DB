@@ -13,8 +13,7 @@
 
 @interface FRCTVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
-@property IBInspectable UITableViewRowAnimation insertionAnimation;
-@property IBInspectable UITableViewRowAnimation deletionAnimation;
+@property IBInspectable UITableViewRowAnimation rowAnimation;
 
 @property IBInspectable NSString *orderKeyPath;
 @property IBInspectable BOOL orderInSection;
