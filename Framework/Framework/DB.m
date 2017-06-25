@@ -90,7 +90,7 @@ static NSString *const PathMap = @"/Map";
     BOOL inform = [self respondsToSelector:selector];
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastPathComponent" ascending:YES];
-    NSMutableArray *URLs = [self.modelBundle URLsForResourcesWithExtension:PlistExtension subdirectory:PathContent].mutableCopy;
+    NSMutableArray *URLs = [self.modelBundle URLsForResourcesWithExtension:ExtensionPlist subdirectory:PathContent].mutableCopy;
     [URLs sortUsingDescriptors:@[descriptor]];
     
     for (NSURL *URL in URLs) {
@@ -111,7 +111,7 @@ static NSString *const PathMap = @"/Map";
 
 - (NSDictionary *)mapForClass:(Class)cls {
     NSString *name = NSStringFromClass(cls);
-    NSURL *URL = [self.modelBundle URLForResource:name withExtension:PlistExtension subdirectory:PathMap];
+    NSURL *URL = [self.modelBundle URLForResource:name withExtension:ExtensionPlist subdirectory:PathMap];
     NSDictionary *map = [NSDictionary dictionaryWithContentsOfURL:URL];
     return map;
 }
