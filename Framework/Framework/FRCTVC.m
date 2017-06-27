@@ -19,8 +19,8 @@
 
 @implementation FRCTVC {
     BOOL _loaded;
-    
     NSMutableSet *_objects;
+    __weak id <NSFetchedResultsControllerDelegate> _delegate;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -198,6 +198,17 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (void)prepareForReloadData {
+    _delegate = self.frc.delegate;
+    self.frc.delegate = nil;
+}
+
+- (void)reloadData {
+    [self.frc performFetch:nil];
+    [self.tableView reloadData];
+    self.frc.delegate = _delegate;
 }
 
 - (void)selectObjects:(UITableViewScrollPosition)position {

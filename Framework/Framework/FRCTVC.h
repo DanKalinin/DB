@@ -26,4 +26,7 @@
 - (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
+- (void)prepareForReloadData;
+- (void)reloadData;
+
 @end
