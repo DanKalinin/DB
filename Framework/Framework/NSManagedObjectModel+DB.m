@@ -15,22 +15,22 @@
 
 + (void)load {
     SEL original = @selector(fetchRequestFromTemplateWithName:substitutionVariables:);
-    SEL swizzled = @selector(DB_swizzledFetchRequestFromTemplateWithName:substitutionVariables:);
+    SEL swizzled = @selector(DB_NSManagedObjectModel_swizzledFetchRequestFromTemplateWithName:substitutionVariables:);
     [self swizzleInstanceMethod:original with:swizzled];
     
     original = @selector(fetchRequestTemplateForName:);
-    swizzled = @selector(DB_swizzledFetchRequestTemplateForName:);
+    swizzled = @selector(DB_NSManagedObjectModel_swizzledFetchRequestTemplateForName:);
     [self swizzleInstanceMethod:original with:swizzled];
 }
 
-- (NSFetchRequest *)DB_swizzledFetchRequestFromTemplateWithName:(NSString *)name substitutionVariables:(NSDictionary<NSString *,id> *)variables {
-    NSFetchRequest *fr = [self DB_swizzledFetchRequestFromTemplateWithName:name substitutionVariables:variables].copy;
+- (NSFetchRequest *)DB_NSManagedObjectModel_swizzledFetchRequestFromTemplateWithName:(NSString *)name substitutionVariables:(NSDictionary<NSString *,id> *)variables {
+    NSFetchRequest *fr = [self DB_NSManagedObjectModel_swizzledFetchRequestFromTemplateWithName:name substitutionVariables:variables].copy;
     [self setSortDescriptors:fr name:name];
     return fr;
 }
 
-- (NSFetchRequest *)DB_swizzledFetchRequestTemplateForName:(NSString *)name {
-    NSFetchRequest *fr = [self DB_swizzledFetchRequestTemplateForName:name].copy;
+- (NSFetchRequest *)DB_NSManagedObjectModel_swizzledFetchRequestTemplateForName:(NSString *)name {
+    NSFetchRequest *fr = [self DB_NSManagedObjectModel_swizzledFetchRequestTemplateForName:name].copy;
     [self setSortDescriptors:fr name:name];
     return fr;
 }
