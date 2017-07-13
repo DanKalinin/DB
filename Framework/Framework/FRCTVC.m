@@ -201,6 +201,8 @@
 }
 
 - (void)prepareForReloadData {
+    if (!self.frc.delegate) return;
+    
     _delegate = self.frc.delegate;
     self.frc.delegate = nil;
 }
