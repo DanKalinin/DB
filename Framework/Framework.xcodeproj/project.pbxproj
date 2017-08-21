@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3731383F1F4B7CC600947396 /* NSArray+DB.h in Headers */ = {isa = PBXBuildFile; fileRef = 3731383D1F4B7CC600947396 /* NSArray+DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		373138401F4B7CC600947396 /* NSArray+DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 3731383E1F4B7CC600947396 /* NSArray+DB.m */; };
 		374391A81D91482C005E1075 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = 374391A61D91482C005E1075 /* DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		374391A91D91482C005E1075 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 374391A71D91482C005E1075 /* DB.m */; };
 		374391F21D91C815005E1075 /* NSManagedObject+DB.h in Headers */ = {isa = PBXBuildFile; fileRef = 374391EE1D91C815005E1075 /* NSManagedObject+DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3731383D1F4B7CC600947396 /* NSArray+DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+DB.h"; sourceTree = "<group>"; };
+		3731383E1F4B7CC600947396 /* NSArray+DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+DB.m"; sourceTree = "<group>"; };
 		3743919B1D914819005E1075 /* DB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3743919F1D914819005E1075 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		374391A61D91482C005E1075 /* DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB.h; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				3784E7961DB61E5400D4E508 /* NSManagedObjectModel+DB.m */,
 				374391EE1D91C815005E1075 /* NSManagedObject+DB.h */,
 				374391EF1D91C815005E1075 /* NSManagedObject+DB.m */,
+				3731383D1F4B7CC600947396 /* NSArray+DB.h */,
+				3731383E1F4B7CC600947396 /* NSArray+DB.m */,
 				3784E7601DB54EE300D4E508 /* FRCTVC.h */,
 				3784E7611DB54EE300D4E508 /* FRCTVC.m */,
 				E7894D571DF97CEF00B5145E /* FRCCVC.h */,
@@ -125,6 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				374391A81D91482C005E1075 /* DB.h in Headers */,
+				3731383F1F4B7CC600947396 /* NSArray+DB.h in Headers */,
 				3784E7971DB61E5400D4E508 /* NSManagedObjectModel+DB.h in Headers */,
 				374391F21D91C815005E1075 /* NSManagedObject+DB.h in Headers */,
 				E7894D591DF97CEF00B5145E /* FRCCVC.h in Headers */,
@@ -218,6 +225,7 @@
 			files = (
 				3784E7631DB54EE300D4E508 /* FRCTVC.m in Sources */,
 				374391A91D91482C005E1075 /* DB.m in Sources */,
+				373138401F4B7CC600947396 /* NSArray+DB.m in Sources */,
 				374391F31D91C815005E1075 /* NSManagedObject+DB.m in Sources */,
 				E7894D5A1DF97CEF00B5145E /* FRCCVC.m in Sources */,
 				3784E7981DB61E5400D4E508 /* NSManagedObjectModel+DB.m in Sources */,
@@ -334,7 +342,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dk.DB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,7 +360,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dk.DB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
