@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+
+FOUNDATION_EXPORT double DBVersionNumber;
+FOUNDATION_EXPORT const unsigned char DBVersionString[];
+
 #import <CoreData/CoreData.h>
+
 #import <DB/NSManagedObjectModel+DB.h>
 #import <DB/NSManagedObject+DB.h>
 #import <DB/NSArray+DB.h>
 #import <DB/FRCTVC.h>
 #import <DB/FRCCVC.h>
-
-FOUNDATION_EXPORT double DBVersionNumber;
-FOUNDATION_EXPORT const unsigned char DBVersionString[];
 
 typedef NS_ENUM(NSUInteger, EntityState) {
     EntityStateNormal,
