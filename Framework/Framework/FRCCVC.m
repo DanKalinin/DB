@@ -27,6 +27,8 @@
     NSMutableOrderedSet *_updatedItems;
     
     NSMutableSet *_objects;
+    
+    __weak id <NSFetchedResultsControllerDelegate> _delegate;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -171,6 +173,19 @@
         NSIndexPath *indexPath = [self.frc indexPathForObject:object];
         [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:position];
     }
+}
+
+- (void)prepareForReloadData {
+    if (!self.frc.delegate) return;
+    
+    _delegate = self.frc.delegate;
+    self.frc.delegate = nil;
+}
+
+- (void)reloadData {
+    [self.frc performFetch:nil];
+    [self.collectionView reloadData];
+    self.frc.delegate = _delegate;
 }
 
 @end

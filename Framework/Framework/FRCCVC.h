@@ -21,4 +21,7 @@
 - (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
+- (void)prepareForReloadData;
+- (void)reloadData;
+
 @end
