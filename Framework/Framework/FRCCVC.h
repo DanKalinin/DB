@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <Controls/Controls.h>
 
 
 
-@interface FRCCVC : UICollectionViewController <NSFetchedResultsControllerDelegate>
+@interface FRCCVC : CollectionViewController <NSFetchedResultsControllerDelegate>
 
 @property NSFetchedResultsController *frc;
 

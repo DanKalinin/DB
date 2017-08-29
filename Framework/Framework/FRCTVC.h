@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <Controls/Controls.h>
 
 
 
-@interface FRCTVC : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface FRCTVC : TableViewController <NSFetchedResultsControllerDelegate>
 
 @property IBInspectable UITableViewRowAnimation rowAnimation; // Row animation for content changes
 
