@@ -14,6 +14,9 @@
 
 @interface FRCCVC : CollectionViewController <NSFetchedResultsControllerDelegate>
 
+@property IBInspectable NSString *orderKeyPath;
+@property IBInspectable BOOL orderInSection;
+
 @property NSFetchedResultsController *frc;
 
 @property NSManagedObject *object;

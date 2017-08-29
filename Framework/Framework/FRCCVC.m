@@ -35,6 +35,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         _objects = [NSMutableSet set];
+        
+        self.orderKeyPath = @"order";
     }
     return self;
 }
@@ -102,6 +104,39 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
     [_objects removeObject:object];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    if ([destinationIndexPath isEqual:sourceIndexPath]) return;
+    
+    id <NSFetchedResultsControllerDelegate> delegate = self.frc.delegate;
+    self.frc.delegate = nil;
+    
+    NSInteger sourceIndex, destinationIndex;
+    NSMutableArray *objects;
+    
+    if (self.orderInSection) {
+        sourceIndex = sourceIndexPath.item;
+        destinationIndex = destinationIndexPath.item;
+        id <NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[sourceIndexPath.section];
+        objects = sectionInfo.objects.mutableCopy;
+    } else {
+        sourceIndex = destinationIndex = 0;
+    }
+    
+    NSManagedObject *object = objects[sourceIndex];
+    [objects removeObjectAtIndex:sourceIndex];
+    [objects insertObject:object atIndex:destinationIndex];
+    
+    for (NSUInteger order = 0; order < objects.count; order++) {
+        object = objects[order];
+        [object setValue:@(order) forKeyPath:self.orderKeyPath];
+    }
+    
+    [self.frc.managedObjectContext save:nil];
+    
+    [self.frc performFetch:nil];
+    self.frc.delegate = delegate;
 }
 
 #pragma mark - Fetched results controller
