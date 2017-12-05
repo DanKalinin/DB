@@ -19,6 +19,8 @@
 @property IBInspectable NSString *orderKeyPath; // Key path for numeric property of the object which defines it's order in table view. The default value is @"order".
 @property IBInspectable BOOL orderInSection; // YES - recompute the order when moving row within section. NO - across the table.
 
+@property IBInspectable NSUInteger maxCount;
+
 @property NSFetchedResultsController *frc; // Controller maintaining the fetch request. Initialize, set delegate and perform the fetch in overriden - viewDidLoad method.
 
 @property NSManagedObject *object; // Object which cell is selected on appearance with scrolling to central position
