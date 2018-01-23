@@ -77,6 +77,7 @@ static NSString *const PathMap = @"/Map";
         if (!imported) {
             [self importContent];
             [self.moc save:nil];
+            [self.moc reset];
             [defaults setBool:YES forKey:importedKey];
             [defaults synchronize];
         }
