@@ -26,6 +26,8 @@
 + (NSFetchRequest *)fetchRequest;
 + (NSUInteger)count:(NSManagedObjectContext *)moc;
 
++ (NSInteger)nextIdentifierForKey:(NSString *)key predicate:(NSPredicate *)predicate start:(NSInteger)start moc:(NSManagedObjectContext *)moc;
+
 - (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map;
 - (NSDictionary *)exportToDictionaryUsingMap:(NSDictionary *)map;
 

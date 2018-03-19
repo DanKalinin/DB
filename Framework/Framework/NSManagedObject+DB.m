@@ -101,6 +101,18 @@ typedef NS_ENUM(NSUInteger, NextValueMode) {
     return count;
 }
 
++ (NSInteger)nextIdentifierForKey:(NSString *)key predicate:(NSPredicate *)predicate start:(NSInteger)start moc:(NSManagedObjectContext *)moc {
+    while (YES) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %i", key, start];
+        NSManagedObject *object = [self find:predicate moc:moc];
+        if (object) {
+            start++;
+        } else {
+            return start;
+        }
+    }
+}
+
 - (void)importFromDictionary:(NSDictionary *)dictionary usingMap:(NSDictionary *)map {
     
     dictionary = [self dictionary:dictionary usingMap:map];
