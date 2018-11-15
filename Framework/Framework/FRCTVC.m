@@ -95,6 +95,10 @@
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((_objects.count > 0) && ((!self.tableView.editing && !self.tableView.allowsMultipleSelection) || (self.tableView.editing && !self.tableView.allowsMultipleSelectionDuringEditing))) {
+        [_objects removeAllObjects];
+    }
+    
     NSManagedObject *object = [self.frc objectAtIndexPath:indexPath];
     [_objects addObject:object];
     return indexPath;
