@@ -71,7 +71,7 @@ static NSString *const PathMap = @"/Map";
         self.store = store;
         
         NSUserDefaults *defaults = [NSUserDefaults.alloc initWithSuiteName:self.modelBundle.bundleIdentifier];
-        NSString *localization = [NSLocale.currentLocale objectForKey:NSLocaleLanguageCode];
+        NSString *localization = NSBundle.mainBundle.preferredLocalizations.firstObject;
         NSString *importedKey = [NSString stringWithFormat:@"imported.%@", localization];
         BOOL imported = [defaults boolForKey:importedKey];
         if (!imported) {
