@@ -7,7 +7,7 @@
 //
 
 #import "DB.h"
-#import <Helpers/Helpers.h>
+#import <FoundationExt/FoundationExt.h>
 
 static NSString *const PathContent = @"/Content";
 static NSString *const PathMap = @"/Map";
