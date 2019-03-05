@@ -52,8 +52,10 @@ static NSString *const PathMap = @"/Map";
         
         NSManagedObjectContext *moc = [NSManagedObjectContext.alloc initWithConcurrencyType:NSMainQueueConcurrencyType];
         moc.persistentStoreCoordinator = psc;
-        moc.undoManager = NSUndoManager.new;
         self.moc = moc;
+        
+        moc.undoManager = NSUndoManager.new;
+        moc.undoManager.groupsByEvent = NO;
         
         // Persistent store
         
