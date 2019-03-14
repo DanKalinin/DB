@@ -14,6 +14,7 @@ FOUNDATION_EXPORT const unsigned char DBVersionString[];
 #import <CoreData/CoreData.h>
 
 #import <DB/NSManagedObjectModel+DB.h>
+#import <DB/NSManagedObjectContext+DB.h>
 #import <DB/NSManagedObject+DB.h>
 #import <DB/NSArray+DB.h>
 #import <DB/FRCTVC.h>
