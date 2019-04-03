@@ -133,9 +133,8 @@
         [object setValue:@(order) forKeyPath:self.orderKeyPath];
     }
     
-    [self.frc.managedObjectContext save:nil];
-    
     [self.frc performFetch:nil];
+    
     self.frc.delegate = delegate;
 }
 
