@@ -29,7 +29,7 @@ static NSString *const PathMap = @"/Map";
 
 @implementation DB
 
-- (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle {
+- (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle group:(NSString *)group {
     self = [super init];
     if (self) {
         
@@ -60,7 +60,7 @@ static NSString *const PathMap = @"/Map";
         // Persistent store
         
         NSFileManager *fm = [NSFileManager defaultManager];
-        NSURL *documentsURL = [fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
+        NSURL *documentsURL = [fm containerURLForSecurityApplicationGroupIdentifier:group];
         NSString *storeName = [NSString stringWithFormat:@"%@.sqlite", name];
         NSURL *storeURL = [documentsURL URLByAppendingPathComponent:storeName];
         

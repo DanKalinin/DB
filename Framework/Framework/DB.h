@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, EntityState) {
 
 @interface DB : NSObject <DB>
 
-- (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle;
+- (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle group:(NSString *)group;
 
 @property (readonly) NSString *name;
 @property (readonly) NSBundle *modelBundle;
