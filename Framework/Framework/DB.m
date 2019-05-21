@@ -22,6 +22,7 @@ static NSString *const PathMap = @"/Map";
 @property NSPersistentStoreCoordinator *psc;
 @property NSManagedObjectModel *mom;
 @property NSManagedObjectContext *moc;
+@property NSUserDefaults *defaults;
 
 @end
 
@@ -73,16 +74,15 @@ static NSString *const PathMap = @"/Map";
         NSAssert(store, error.localizedDescription);
         self.store = store;
         
-        NSUserDefaults *defaults = [NSUserDefaults.alloc initWithSuiteName:self.modelBundle.bundleIdentifier];
-        NSString *localization = NSBundle.mainBundle.preferredLocalizations.firstObject;
-        NSString *importedKey = [NSString stringWithFormat:@"imported.%@", localization];
-        BOOL imported = [defaults boolForKey:importedKey];
+        self.defaults = [NSUserDefaults.alloc initWithSuiteName:group];
+        NSString *importedKey = mom.versionIdentifiers.anyObject;
+        BOOL imported = [self.defaults boolForKey:importedKey];
         if (!imported) {
             [self importContent];
             [self.moc save:nil];
             [self.moc reset];
-            [defaults setBool:YES forKey:importedKey];
-            [defaults synchronize];
+            [self.defaults setBool:YES forKey:importedKey];
+            [self.defaults synchronize];
         }
     }
     return self;
@@ -102,6 +102,7 @@ static NSString *const PathMap = @"/Map";
         name = [name componentsSeparatedByString:@"-"].lastObject;
         NSArray *array = [NSArray arrayWithContentsOfURL:URL];
         Class class = NSClassFromString(name);
+        [class delete:nil moc:self.moc];
         NSDictionary *map = [NSDictionary dictionaryWithContentsOfURL:URL];
         for (NSDictionary *dictionary in array) {
             NSManagedObject *object = [class create:self.moc];

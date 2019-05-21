@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, EntityState) {
 @property (readonly) NSPersistentStoreCoordinator *psc;
 @property (readonly) NSManagedObjectModel *mom;
 @property (readonly) NSManagedObjectContext *moc;
+@property (readonly) NSUserDefaults *defaults;
 
 - (void)importContent;
 - (NSDictionary *)mapForClass:(Class)cls;
