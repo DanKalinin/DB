@@ -24,6 +24,9 @@ static NSString *const PathMap = @"/Map";
 @property NSManagedObjectContext *moc;
 @property NSUserDefaults *defaults;
 
+@property NSString *pidKey;
+@property NSString *mocKey;
+
 @end
 
 
@@ -33,6 +36,8 @@ static NSString *const PathMap = @"/Map";
 - (instancetype)initWithName:(NSString *)name bundle:(NSBundle *)bundle group:(NSString *)group {
     self = [super init];
     if (self) {
+        self.pidKey = @"pid";
+        self.mocKey = @"moc";
         
         self.name = name;
         if (!bundle) bundle = [NSBundle mainBundle];
@@ -62,6 +67,8 @@ static NSString *const PathMap = @"/Map";
         moc.undoManager = NSUndoManager.new;
         moc.undoManager.groupsByEvent = NO;
         
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(NSManagedObjectContextDidSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:moc];
+        
         // Persistent store
         
         NSFileManager *fm = [NSFileManager defaultManager];
@@ -79,6 +86,7 @@ static NSString *const PathMap = @"/Map";
         self.store = store;
         
         self.defaults = [NSUserDefaults.alloc initWithSuiteName:group];
+        [self.defaults addObserver:self forKeyPath:self.mocKey options:0 context:NULL];
         NSString *importedKey = mom.versionIdentifiers.anyObject;
         BOOL imported = [self.defaults boolForKey:importedKey];
         if (!imported) {
@@ -141,6 +149,33 @@ static NSString *const PathMap = @"/Map";
     [moc performBlock:^{
         block(moc);
     }];
+}
+
+- (void)NSManagedObjectContextDidSaveNotification:(NSNotification *)notification {
+    [self.defaults setInteger:NSProcessInfo.processInfo.processIdentifier forKey:self.pidKey];
+    
+    NSMutableDictionary *dictionary = NSMutableDictionary.dictionary;
+    for (NSString *key in notification.userInfo.allKeys) {
+        if ([key isEqualToString:NSInsertedObjectsKey] || [key isEqualToString:NSUpdatedObjectsKey] || [key isEqualToString:NSDeletedObjectsKey]) {
+            NSSet *value = notification.userInfo[key];
+            dictionary[key] = [value.allObjects valueForKeyPath:@"objectID.URIRepresentation"];
+        }
+    }
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    
+    [self.defaults setObject:data forKey:self.mocKey];
+    
+    [self.defaults synchronize];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSInteger pid = [self.defaults integerForKey:self.pidKey];
+    if (pid != NSProcessInfo.processInfo.processIdentifier) {
+        NSData *data = [self.defaults dataForKey:self.mocKey];
+        NSDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [NSManagedObjectContext mergeChangesFromRemoteContextSave:dictionary intoContexts:@[self.moc]];
+    }
 }
 
 @end
