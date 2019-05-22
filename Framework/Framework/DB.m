@@ -55,6 +55,10 @@ static NSString *const PathMap = @"/Map";
         moc.persistentStoreCoordinator = psc;
         self.moc = moc;
         
+        moc.mergePolicy = NSOverwriteMergePolicy;
+        moc.automaticallyMergesChangesFromParent = YES;
+        moc.retainsRegisteredObjects = YES;
+        
         moc.undoManager = NSUndoManager.new;
         moc.undoManager.groupsByEvent = NO;
         
@@ -124,6 +128,11 @@ static NSString *const PathMap = @"/Map";
 - (NSManagedObjectContext *)newBackgroundContext {
     NSManagedObjectContext *moc = [NSManagedObjectContext.alloc initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     moc.persistentStoreCoordinator = self.psc;
+    
+    moc.mergePolicy = NSOverwriteMergePolicy;
+    moc.automaticallyMergesChangesFromParent = YES;
+    moc.retainsRegisteredObjects = YES;
+    
     return moc;
 }
 
