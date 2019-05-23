@@ -169,7 +169,7 @@ static NSString *const PathMap = @"/Map";
     [self.defaults synchronize];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context {
     NSInteger pid = [self.defaults integerForKey:self.pidKey];
     if (pid != NSProcessInfo.processInfo.processIdentifier) {
         NSData *data = [self.defaults dataForKey:self.mocKey];
