@@ -20,6 +20,8 @@ FOUNDATION_EXPORT const unsigned char DBVersionString[];
 #import <DB/FRCTVC.h>
 #import <DB/FRCCVC.h>
 
+extern NSNotificationName const DBDidMergeContextNotification;
+
 typedef NS_ENUM(NSUInteger, EntityState) {
     EntityStateNormal,
     EntityStateDeleted,

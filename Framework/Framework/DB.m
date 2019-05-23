@@ -9,6 +9,8 @@
 #import "DB.h"
 #import <FoundationExt/FoundationExt.h>
 
+NSNotificationName const DBDidMergeContextNotification = @"DBDidMergeContextNotification";
+
 static NSString *const PathContent = @"/Content";
 static NSString *const PathMap = @"/Map";
 
@@ -175,6 +177,7 @@ static NSString *const PathMap = @"/Map";
         NSData *data = [self.defaults dataForKey:self.mocKey];
         NSDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         [NSManagedObjectContext mergeChangesFromRemoteContextSave:dictionary intoContexts:@[self.moc]];
+        [NSNotificationCenter.defaultCenter postNotificationName:DBDidMergeContextNotification object:self];
     }
 }
 
