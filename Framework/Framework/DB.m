@@ -69,7 +69,7 @@ static NSString *const PathMap = @"/Map";
         moc.undoManager = NSUndoManager.new;
         moc.undoManager.groupsByEvent = NO;
         
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(NSManagedObjectContextDidSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:moc];
+//        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(NSManagedObjectContextDidSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:moc];
         
         // Persistent store
         
@@ -88,7 +88,7 @@ static NSString *const PathMap = @"/Map";
         self.store = store;
         
         self.defaults = [NSUserDefaults.alloc initWithSuiteName:group];
-        [self.defaults addObserver:self forKeyPath:self.mocKey options:0 context:NULL];
+//        [self.defaults addObserver:self forKeyPath:self.mocKey options:0 context:NULL];
         NSString *importedKey = mom.versionIdentifiers.anyObject;
         BOOL imported = [self.defaults boolForKey:importedKey];
         if (!imported) {
@@ -103,7 +103,6 @@ static NSString *const PathMap = @"/Map";
 }
 
 - (void)importContent {
-    
     SEL selector = @selector(didImportObject:fromDictionary:);
     BOOL inform = [self respondsToSelector:selector];
     
