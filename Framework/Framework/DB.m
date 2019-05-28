@@ -65,6 +65,7 @@ static NSString *const PathMap = @"/Map";
         moc.mergePolicy = NSOverwriteMergePolicy;
         moc.automaticallyMergesChangesFromParent = YES;
         moc.retainsRegisteredObjects = YES;
+        moc.stalenessInterval = 0.0;
         
         moc.undoManager = NSUndoManager.new;
         moc.undoManager.groupsByEvent = NO;
@@ -141,6 +142,7 @@ static NSString *const PathMap = @"/Map";
     moc.mergePolicy = NSOverwriteMergePolicy;
     moc.automaticallyMergesChangesFromParent = YES;
     moc.retainsRegisteredObjects = YES;
+    moc.stalenessInterval = 0.0;
     
     return moc;
 }
