@@ -7,7 +7,7 @@
 //
 
 #import "DB.h"
-#import <FoundationExt/FoundationExt.h>
+#import <Helpers/Helpers.h>
 
 NSNotificationName const DBDidMergeContextNotification = @"DBDidMergeContextNotification";
 
