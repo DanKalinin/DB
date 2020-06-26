@@ -14,6 +14,9 @@ NSNotificationName const DBDidMergeContextNotification = @"DBDidMergeContextNoti
 static NSString *const PathContent = @"/Content";
 static NSString *const PathMap = @"/Map";
 
+static NSString *const KeyVersion = @"version";
+static NSString *const KeyLanguage = @"language";
+
 
 
 @interface DB ()
@@ -89,13 +92,16 @@ static NSString *const PathMap = @"/Map";
         
         self.defaults = [NSUserDefaults.alloc initWithSuiteName:group];
 //        [self.defaults addObserver:self forKeyPath:self.mocKey options:0 context:NULL];
-        NSString *importedKey = mom.versionIdentifiers.anyObject;
-        BOOL imported = [self.defaults boolForKey:importedKey];
-        if (!imported) {
+        NSString *version = mom.versionIdentifiers.anyObject;
+        NSString *language = NSLocale.currentLocale.languageCode;
+        NSString *lastVersion = [self.defaults stringForKey:KeyVersion];
+        NSString *lastLanguage = [self.defaults stringForKey:KeyLanguage];
+        if (![version isEqualToString:lastVersion] || ![language isEqualToString:lastLanguage]) {
             [self importContent];
             [self.moc save:nil];
             [self.moc reset];
-            [self.defaults setBool:YES forKey:importedKey];
+            [self.defaults setObject:version forKey:KeyVersion];
+            [self.defaults setObject:language forKey:KeyLanguage];
             [self.defaults synchronize];
         }
     }
